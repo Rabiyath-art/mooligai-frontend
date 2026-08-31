@@ -1,0 +1,173 @@
+.product-card {
+    height: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid #e9ecef;
+    border-radius: 18px;
+
+    background: #fff;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.product-image {
+    position: relative;
+
+    height: 260px;
+
+    background: #f6f6f4;
+}
+
+.product-image>a {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #adb5bd;
+
+    font-size: 50px;
+}
+
+.wishlist-btn {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.wishlist-btn:hover {
+    background: #f8f9fa;
+}
+
+.product-content {
+    padding: 18px;
+}
+
+.category-name {
+    color: #6c757d;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.product-name {
+    margin: 7px 0;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+.product-name a {
+    color: #212529;
+
+    text-decoration: none;
+}
+
+.weight {
+    margin-bottom: 15px;
+
+    color: #6c757d;
+
+    font-size: 13px;
+}
+
+.product-bottom {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.price {
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+.cart-btn {
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: #212529;
+
+    color: #fff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.cart-btn:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 767px) {
+
+    .product-image {
+        height: 210px;
+    }
+
+    .product-content {
+        padding: 14px;
+    }
+
+    .product-name {
+        font-size: 16px;
+    }
+
+}

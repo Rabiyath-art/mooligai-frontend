@@ -1,0 +1,183 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+
+    <div class="container">
+
+        <!-- Logo -->
+
+        <a class="navbar-brand" routerLink="/">
+            <span class="brand-icon">
+                🌿
+            </span>
+
+            <span>
+                MooligaiMart
+            </span>
+        </a>
+
+
+        <!-- Mobile Toggle -->
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <!-- Navigation -->
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <ul class="navbar-nav mx-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{
+              exact: true
+            }">
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link" routerLink="/products" routerLinkActive="active">
+                        Products
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link" routerLink="/products">
+                        Categories
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <!-- Right Side -->
+
+            <div class="navbar-actions">
+
+                <!-- Search -->
+
+                <button class="icon-btn" aria-label="Search">
+                    <i class="bi bi-search"></i>
+                </button>
+
+
+                <!-- Wishlist -->
+
+                <a class="icon-btn position-relative" routerLink="/wishlist" aria-label="Wishlist">
+
+                    <i class="bi bi-heart"></i>
+
+                    @if (wishlistCount > 0) {
+
+                    <span class="badge-count">
+                        {{ wishlistCount }}
+                    </span>
+
+                    }
+
+                </a>
+
+
+                <!-- Cart -->
+
+                <a class="icon-btn position-relative" routerLink="/cart" aria-label="Cart">
+
+                    <i class="bi bi-cart3"></i>
+
+                    @if (cartCount > 0) {
+
+                    <span class="badge-count">
+                        {{ cartCount }}
+                    </span>
+
+                    }
+
+                </a>
+
+
+                <!-- User -->
+
+                @if (isLoggedIn) {
+
+                <div class="dropdown">
+
+                    <button class="profile-btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+
+                        <i class="bi bi-person"></i>
+
+                    </button>
+
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a class="dropdown-item" routerLink="/profile">
+
+                                <i class="bi bi-person me-2"></i>
+
+                                Profile
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a class="dropdown-item" routerLink="/orders">
+
+                                <i class="bi bi-box-seam me-2"></i>
+
+                                My Orders
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+
+                        <li>
+
+                            <button class="dropdown-item" type="button" (click)="logout()">
+
+                                <i class="bi bi-box-arrow-right me-2"></i>
+
+                                Logout
+
+                            </button>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                } @else {
+
+                <a class="btn btn-dark btn-sm px-3" routerLink="/login">
+                    Login
+                </a>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>

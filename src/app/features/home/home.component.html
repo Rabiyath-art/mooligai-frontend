@@ -1,0 +1,203 @@
+<section class="hero-section">
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <span class="hero-badge">
+                    🌿 Natural & Traditional
+                </span>
+
+                <h1>
+                    Natural Care.
+                    <br />
+                    Traditional Wisdom.
+                </h1>
+
+                <p>
+                    Discover carefully selected herbal
+                    powders and natural products for
+                    your everyday routine.
+                </p>
+
+                <button class="btn btn-dark btn-lg">
+                    Shop Now
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+
+            </div>
+
+            <div class="col-lg-5">
+
+                <div class="hero-image">
+                    <i class="bi bi-flower1"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<section class="categories-section">
+    <div class="container">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">
+                    EXPLORE
+                </span>
+
+                <h2>
+                    Shop by Category
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="category-card">
+                    <i class="bi bi-flower1"></i>
+                    <span>Hair Care</span>
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="category-card">
+                    <i class="bi bi-stars"></i>
+                    <span>Face Care</span>
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="category-card">
+                    <i class="bi bi-droplet"></i>
+                    <span>Skin Care</span>
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="category-card">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Powders</span>
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="category-card">
+                    <i class="bi bi-heart"></i>
+                    <span>Wellness</span>
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="category-card">
+                    <i class="bi bi-gift"></i>
+                    <span>Combos</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<section class="products-section">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    OUR PRODUCTS
+                </span>
+
+                <h2>
+                    Popular Products
+                </h2>
+
+            </div>
+
+            <a routerLink="/products" class="view-all">
+                View All
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+
+        @if (loading) {
+
+        <div class="text-center py-5">
+
+            <div class="spinner-border" role="status"></div>
+
+        </div>
+
+        }
+
+
+        @if (!loading && products.length > 0) {
+
+        <div class="row g-4">
+
+            @for (
+            product of products;
+            track product._id
+            ) {
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <app-product-card [product]="product" (addToCart)="addToCart($event)" (toggleWishlist)="          toggleWishlist($event)
+        " />
+
+            </div>
+
+            }
+
+        </div>
+        }
+
+
+        @if (!loading && products.length === 0) {
+
+        <div class="text-center py-5">
+
+            <p>
+                No products available.
+            </p>
+
+        </div>
+
+        }
+
+    </div>
+
+</section>
