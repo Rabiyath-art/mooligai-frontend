@@ -1,0 +1,169 @@
+<div class="dashboard">
+
+    <div class="page-title">
+
+        <div>
+
+            <span>
+                OVERVIEW
+            </span>
+
+            <h2>
+                Dashboard
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- STAT CARDS -->
+
+    <div class="row g-3 mb-4">
+
+        @for (
+        stat of stats;
+        track stat.title
+        ) {
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <span class="material-symbols-outlined">
+                        {{ stat.icon }}
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <span class="stat-title">
+                        {{ stat.title }}
+                    </span>
+
+                    <h3>
+                        {{ stat.value }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+
+    <!-- RECENT ORDERS -->
+
+    <div class="content-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <span>
+                    ORDERS
+                </span>
+
+                <h3>
+                    Recent Orders
+                </h3>
+
+            </div>
+
+
+            <a routerLink="/admin/orders" class="view-all">
+                View All
+            </a>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Order
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @for (
+                    order of recentOrders;
+                    track order.id
+                    ) {
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ order.id }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ order.customer }}
+                        </td>
+
+                        <td>
+                            {{ order.amount }}
+                        </td>
+
+                        <td>
+
+                            <span class="status" [class.paid]="
+                    order.status === 'Paid'
+                  " [class.pending]="
+                    order.status === 'Pending'
+                  " [class.shipped]="
+                    order.status === 'Shipped'
+                  " [class.delivered]="
+                    order.status === 'Delivered'
+                  ">
+                                {{ order.status }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

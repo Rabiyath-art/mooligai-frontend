@@ -1,0 +1,109 @@
+<div class="admin-layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                M
+            </div>
+
+            <div>
+                <strong>
+                    Mooligai
+                </strong>
+
+                <small>
+                    ADMIN
+                </small>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            @for ( item of menuItems; track item.route ) {
+            <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{
+            exact: item.label === 'Dashboard'
+          }" class="nav-item">
+
+                <span class="material-symbols-outlined">
+                    {{ item.icon }}
+                </span>
+
+                <span>
+                    {{ item.label }}
+                </span>
+
+            </a>
+
+            }
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="logout-button">
+
+                <span class="material-symbols-outlined">
+                    logout
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="admin-header">
+
+            <div>
+
+                <h1>
+                    Admin Panel
+                </h1>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <router-outlet />
+
+        </section>
+
+    </main>
+
+</div>

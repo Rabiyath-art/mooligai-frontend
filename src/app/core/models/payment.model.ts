@@ -1,13 +1,48 @@
+// export interface RazorpayOrderResponse {
+//     success: boolean;
+
+//     data: {
+//         orderId: string;
+
+//         amount: number;
+
+//         currency: string;
+
+//         key: string;
+//     };
+// }
+
+
+export interface RazorpayOrderData {
+
+    orderId: string;
+
+    razorpayOrderId: string;
+
+    amount: number;
+
+    currency: string;
+
+    key: string;
+
+}
+
 export interface RazorpayOrderResponse {
+
     success: boolean;
 
-    data: {
-        orderId: string;
+    data: RazorpayOrderData;
 
-        amount: number;
+}
 
-        currency: string;
+export interface PaymentVerificationRequest {
 
-        key: string;
-    };
+    orderId: string;
+
+    razorpayOrderId: string;
+
+    razorpayPaymentId: string;
+
+    razorpaySignature: string;
+
 }

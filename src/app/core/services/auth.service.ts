@@ -24,6 +24,10 @@ import {
     AuthResponse
 } from '../models/auth.model';
 
+import {
+    Router
+} from '@angular/router';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -49,6 +53,14 @@ export class AuthService {
     readonly isLoggedIn$ =
         this.loggedInSubject.asObservable();
 
+    private readonly authInitializedSubject =
+        new BehaviorSubject<boolean>(false);
+
+    readonly authInitialized$ =
+        this.authInitializedSubject.asObservable();
+
+    private readonly router =
+        inject(Router);
 
     getCurrentUser(): Observable<AuthResponse> {
 
@@ -62,29 +74,120 @@ export class AuthService {
     }
 
 
+    // loadCurrentUser(): void {
+
+    //     this.getCurrentUser()
+    //         .subscribe({
+
+    //             next: (response) => {
+
+    //                 this.userSubject.next(
+    //                     response.data
+    //                 );
+
+    //                 this.loggedInSubject.next(
+    //                     true
+    //                 );
+
+    //                 this.authInitializedSubject.next(
+    //                     true
+    //                 );
+
+    //             },
+
+    //             error: () => {
+
+    //                 this.userSubject.next(null);
+
+    //                 this.loggedInSubject.next(
+    //                     false
+    //                 );
+
+    //                 this.authInitializedSubject.next(
+    //                     true
+    //                 );
+
+    //             }
+
+    //         });
+
+    // }
+
     loadCurrentUser(): void {
+
+        console.log(
+            'AUTH: Loading current user...'
+        );
 
         this.getCurrentUser()
             .subscribe({
 
                 next: (response) => {
 
-                    this.userSubject.next(
+                    console.log(
+                        'AUTH: Current user:',
                         response.data
+                    );
+
+                    const user =
+                        response.data;
+
+                    this.userSubject.next(
+                        user
                     );
 
                     this.loggedInSubject.next(
                         true
                     );
 
+                    this.authInitializedSubject.next(
+                        true
+                    );
+
+
+                    // ROLE BASED REDIRECT
+
+                    if (user.role === 'admin') {
+
+                        console.log(
+                            'AUTH: Admin detected'
+                        );
+
+                        this.router.navigate([
+                            '/admin/dashboard'
+                        ]);
+
+                    } else {
+
+                        console.log(
+                            'AUTH: Normal user detected'
+                        );
+
+                        this.router.navigate([
+                            '/'
+                        ]);
+
+                    }
+
                 },
 
-                error: () => {
+                error: (error) => {
 
-                    this.userSubject.next(null);
+                    console.error(
+                        'AUTH: /me failed:',
+                        error
+                    );
+
+                    this.userSubject.next(
+                        null
+                    );
 
                     this.loggedInSubject.next(
                         false
+                    );
+
+                    this.authInitializedSubject.next(
+                        true
                     );
 
                 }
@@ -92,7 +195,6 @@ export class AuthService {
             });
 
     }
-
 
     loginWithGoogle(): void {
 

@@ -1,0 +1,171 @@
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title span,
+.card-heading span {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #6c757d;
+}
+
+.page-title h2 {
+    margin: 5px 0 0;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+.stat-card {
+    min-height: 130px;
+
+    padding: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    background: #fff;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 14px;
+}
+
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f1f3f5;
+}
+
+
+.stat-icon span {
+    font-size: 24px;
+}
+
+
+.stat-title {
+    color: #6c757d;
+
+    font-size: 12px;
+}
+
+
+.stat-card h3 {
+    margin: 5px 0 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+
+.content-card {
+    padding: 25px;
+
+    background: #fff;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 14px;
+}
+
+
+.card-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.card-heading h3 {
+    margin: 5px 0 0;
+
+    font-size: 19px;
+
+    font-weight: 700;
+}
+
+
+.view-all {
+    color: #212529;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.table {
+    margin-bottom: 0;
+}
+
+
+.table th {
+    color: #6c757d;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+}
+
+
+.table td {
+    font-size: 13px;
+}
+
+
+.status {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.status.paid {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.status.pending {
+    background: #fff3cd;
+    color: #664d03;
+}
+
+.status.shipped {
+    background: #cfe2ff;
+    color: #084298;
+}
+
+.status.delivered {
+    background: #d1e7dd;
+    color: #0f5132;
+}
