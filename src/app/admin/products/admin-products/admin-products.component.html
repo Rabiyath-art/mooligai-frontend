@@ -1,1 +1,551 @@
-<p>admin-products works!</p>
+<div class="admin-products-page">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="page-header">
+
+        <div>
+
+            <span class="eyebrow">
+                INVENTORY
+            </span>
+
+            <h2>
+                Products
+            </h2>
+
+            <p>
+                Manage all products in your store.
+            </p>
+
+        </div>
+
+
+        <!-- ADD PRODUCT -->
+
+        <button type="button" class="btn btn-dark" (click)="openCreate()">
+
+            <span class="material-symbols-outlined">
+                add
+            </span>
+
+            Add Product
+
+        </button>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- LOADING -->
+    <!-- ================================================= -->
+
+    @if (loading) {
+
+    <div class="text-center py-5">
+
+        <div class="spinner-border" role="status"></div>
+
+    </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- ERROR -->
+    <!-- ================================================= -->
+
+    @else if (errorMessage) {
+
+    <div class="alert alert-danger">
+
+        {{ errorMessage }}
+
+    </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- PRODUCT CONTENT -->
+    <!-- ================================================= -->
+
+    @else {
+
+    @if (products.length > 0) {
+
+    <div class="product-table-card">
+
+        <div class="table-responsive">
+
+            <table class="table align-middle mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Stock
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-end">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @for (
+                    product of products;
+                    track product._id
+                    ) {
+
+                    <tr>
+
+
+                        <!-- ================================= -->
+                        <!-- PRODUCT -->
+                        <!-- ================================= -->
+
+                        <td>
+
+                            <div class="product-info">
+
+
+                                <!-- IMAGE -->
+
+                                @if (product.images?.length) {
+
+                                <img [src]="product.images[0]" [alt]="product.name" class="product-image">
+
+                                }
+
+                                @else {
+
+                                <div class="product-placeholder">
+
+                                    <span class="material-symbols-outlined">
+                                        image
+                                    </span>
+
+                                </div>
+
+                                }
+
+
+                                <!-- NAME -->
+
+                                <div>
+
+                                    <button type="button" class="product-name" (click)="openDetail(product)">
+
+                                        {{ product.name }}
+
+                                    </button>
+
+
+                                    <small>
+
+                                        {{ product.weight || '-' }}
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- CATEGORY -->
+                        <!-- ================================= -->
+
+                        <td>
+
+                            {{ product.category?.name || '-' }}
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- PRICE -->
+                        <!-- ================================= -->
+
+                        <td>
+
+                            ₹{{ product.price }}
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- STOCK -->
+                        <!-- ================================= -->
+
+                        <td>
+
+                            {{ product.stock }}
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- STATUS -->
+                        <!-- ================================= -->
+
+                        <td>
+
+                            @if (product.isActive) {
+
+                            <span class="status active">
+                                Active
+                            </span>
+
+                            }
+
+                            @else {
+
+                            <span class="status inactive">
+                                Inactive
+                            </span>
+
+                            }
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- ACTIONS -->
+                        <!-- ================================= -->
+
+                        <td>
+
+                            <div class="action-buttons">
+
+
+                                <!-- VIEW -->
+
+                                <button type="button" class="btn btn-sm btn-outline-dark" title="View"
+                                    (click)="openDetail(product)">
+
+                                    <span class="material-symbols-outlined">
+                                        visibility
+                                    </span>
+
+                                </button>
+
+
+
+                                <!-- EDIT -->
+
+                                <button type="button" class="btn btn-sm btn-outline-secondary" title="Edit"
+                                    (click)="openEdit(product)">
+
+                                    <span class="material-symbols-outlined">
+                                        edit
+                                    </span>
+
+                                </button>
+
+
+
+                                <!-- STATUS -->
+
+                                <button type="button" class="btn btn-sm btn-outline-warning"
+                                    (click)="toggleStatus(product)" [disabled]="updatingProductId === product._id"
+                                    [title]="
+                                                    product.isActive
+                                                        ? 'Deactivate'
+                                                        : 'Activate'
+                                                ">
+
+                                    @if (
+                                    updatingProductId ===
+                                    product._id
+                                    ) {
+
+                                    <span class="material-symbols-outlined spin">
+                                        progress_activity
+                                    </span>
+
+                                    }
+
+                                    @else {
+
+                                    <span class="material-symbols-outlined">
+
+                                        {{
+                                        product.isActive
+                                        ? 'visibility_off'
+                                        : 'visibility'
+                                        }}
+
+                                    </span>
+
+                                    }
+
+                                </button>
+
+
+
+                                <!-- DELETE -->
+
+                                <button type="button" class="btn btn-sm btn-outline-danger" title="Delete"
+                                    (click)="openDelete(product)">
+
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- EMPTY -->
+    <!-- ================================================= -->
+
+    @else {
+
+    <div class="empty-state">
+
+        <span class="material-symbols-outlined">
+            inventory_2
+        </span>
+
+        <h4>
+            No products found
+        </h4>
+
+        <p>
+            Create your first product.
+        </p>
+
+
+        <button type="button" class="btn btn-dark" (click)="openCreate()">
+
+            Add Product
+
+        </button>
+
+    </div>
+
+    }
+
+
+
+    <!-- ================================================= -->
+    <!-- PAGINATION -->
+    <!-- ================================================= -->
+
+    @if (totalPages > 1) {
+
+    <div class="pagination-wrapper">
+
+        <button type="button" class="btn btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
+
+            Previous
+
+        </button>
+
+
+        <span>
+
+            Page
+            {{ currentPage }}
+            of
+            {{ totalPages }}
+
+        </span>
+
+
+        <button type="button" class="btn btn-outline-secondary" (click)="nextPage()"
+            [disabled]="currentPage === totalPages">
+
+            Next
+
+        </button>
+
+    </div>
+
+    }
+
+    }
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- DETAIL POPUP -->
+<!-- ================================================= -->
+
+@if (
+showDetailModal &&
+selectedProduct
+) {
+
+<app-admin-product-detail [product]="selectedProduct" (close)="closeDetail()" (edit)="openEdit($event)"
+    (statusChanged)="onProductStatusChanged($event)" />
+
+}
+
+
+
+<!-- ================================================= -->
+<!-- CREATE POPUP -->
+<!-- ================================================= -->
+
+@if (showCreateModal) {
+
+<app-admin-product-create (close)="closeCreate()" (created)="onProductCreated($event)" />
+
+}
+
+
+
+<!-- ================================================= -->
+<!-- EDIT POPUP -->
+<!-- ================================================= -->
+
+@if (
+showEditModal &&
+selectedProduct
+) {
+
+<app-admin-product-edit [product]="selectedProduct" (close)="closeEdit()" (updated)="onProductUpdated($event)" />
+
+}
+
+
+
+<!-- ================================================= -->
+<!-- DELETE POPUP -->
+<!-- ================================================= -->
+
+@if (
+showDeleteModal &&
+selectedProduct
+) {
+
+<div class="modal-backdrop-custom" (click)="closeDelete()"></div>
+
+
+<div class="delete-modal-wrapper">
+
+    <div class="delete-modal" (click)="$event.stopPropagation()">
+
+        <div class="delete-icon">
+
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+
+        </div>
+
+
+        <h3>
+            Delete Product?
+        </h3>
+
+
+        <p>
+
+            Are you sure you want to delete
+
+            <strong>
+                "{{ selectedProduct.name }}"
+            </strong>
+
+            ?
+
+            <br>
+
+            This action cannot be undone.
+
+        </p>
+
+
+        <div class="delete-actions">
+
+            <button type="button" class="btn btn-outline-secondary" (click)="closeDelete()">
+
+                Cancel
+
+            </button>
+
+
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="deleting">
+
+                @if (deleting) {
+
+                Deleting...
+
+                }
+
+                @else {
+
+                <span class="material-symbols-outlined">
+                    delete
+                </span>
+
+                Delete Product
+
+                }
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+}

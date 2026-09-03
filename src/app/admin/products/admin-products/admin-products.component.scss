@@ -1,0 +1,361 @@
+.admin-products-page {
+    width: 100%;
+}
+
+
+.page-header {
+    margin-bottom: 25px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+}
+
+
+.eyebrow {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #6c757d;
+}
+
+
+.page-header h2 {
+    margin: 5px 0;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+.page-header p {
+    margin: 0;
+
+    color: #6c757d;
+
+    font-size: 13px;
+}
+
+
+.product-table-card {
+    background: #fff;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+
+.table th {
+    padding: 16px;
+
+    background: #f8f9fa;
+
+    color: #6c757d;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+}
+
+
+.table td {
+    padding: 16px;
+}
+
+
+.product-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.product-image,
+.product-placeholder {
+    width: 52px;
+
+    height: 52px;
+
+    border-radius: 10px;
+
+    flex-shrink: 0;
+}
+
+
+.product-image {
+    object-fit: cover;
+
+    background: #f8f9fa;
+}
+
+
+.product-placeholder {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f8f9fa;
+
+    color: #adb5bd;
+}
+
+
+.product-placeholder span {
+    font-size: 24px;
+}
+
+
+.product-name {
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    display: block;
+
+    color: #212529;
+
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.product-name:hover {
+    text-decoration: underline;
+}
+
+
+.product-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #6c757d;
+
+    font-size: 12px;
+}
+
+
+.status {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+.status.active {
+    background: #d1e7dd;
+
+    color: #0f5132;
+}
+
+
+.status.inactive {
+    background: #f8d7da;
+
+    color: #842029;
+}
+
+
+.action-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 6px;
+}
+
+
+.action-buttons .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+.empty-state {
+    padding: 70px 20px;
+
+    background: #fff;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+
+.empty-state>span {
+    font-size: 50px;
+
+    color: #adb5bd;
+}
+
+
+.empty-state h4 {
+    margin-top: 15px;
+
+    font-size: 18px;
+}
+
+
+.empty-state p {
+    color: #6c757d;
+}
+
+
+.pagination-wrapper {
+    margin-top: 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+@media (max-width: 768px) {
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+}
+
+/* ======================================== */
+/* DELETE MODAL */
+/* ======================================== */
+
+.delete-modal-wrapper {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+.delete-modal {
+    width: 100%;
+
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 32px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.20);
+}
+
+
+.delete-icon {
+    width: 60px;
+
+    height: 60px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #fff1f1;
+
+    color: #dc3545;
+}
+
+
+.delete-icon .material-symbols-outlined {
+    font-size: 30px;
+}
+
+
+.delete-modal h3 {
+    margin-bottom: 10px;
+
+    font-size: 22px;
+
+    font-weight: 700;
+}
+
+
+.delete-modal p {
+    margin-bottom: 8px;
+
+    color: #6c757d;
+
+    line-height: 1.6;
+}
+
+
+.delete-modal p strong {
+    color: #212529;
+}
+
+
+.delete-warning {
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: #dc3545;
+
+    font-size: 13px;
+}
+
+
+.delete-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+}
