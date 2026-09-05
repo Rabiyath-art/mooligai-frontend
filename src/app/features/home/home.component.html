@@ -1,203 +1,260 @@
+<app-navbar></app-navbar>
+
+<!-- ============ HERO ============ -->
 <section class="hero-section">
     <div class="container">
-
         <div class="row align-items-center">
 
-            <div class="col-lg-7">
+            <div class="col-lg-6">
+                <span class="hero-badge" data-aos="fade-up" data-aos-delay="0">Rooted in Siddha tradition</span>
 
-                <span class="hero-badge">
-                    🌿 Natural & Traditional
-                </span>
-
-                <h1>
-                    Natural Care.
-                    <br />
-                    Traditional Wisdom.
+                <h1 data-aos="fade-up" data-aos-delay="100">
+                    The roots your<br>grandmother trusted.
                 </h1>
 
-                <p>
-                    Discover carefully selected herbal
-                    powders and natural products for
-                    your everyday routine.
+                <p data-aos="fade-up" data-aos-delay="200">
+                    Stone-ground powders, sun-dried leaves and cold-pressed oils — made
+                    the way Tamil households have made them for generations, with
+                    nothing added to speed it up.
                 </p>
 
-                <button class="btn btn-dark btn-lg">
-                    Shop Now
-                    <i class="bi bi-arrow-right ms-2"></i>
-                </button>
-
-            </div>
-
-            <div class="col-lg-5">
-
-                <div class="hero-image">
-                    <i class="bi bi-flower1"></i>
+                <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
+                    <button class="btn btn-mg-primary">
+                        Shop the collection
+                        <mat-icon class="ms-2">arrow_forward</mat-icon>
+                    </button>
+                    <a href="#story" class="hero-cta__link">
+                        <mat-icon>play_circle</mat-icon> How it's made
+                    </a>
                 </div>
 
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                    <div><strong>100%</strong><span>Chemical-free</span></div>
+                    <div><strong>SUN</strong><span>Dried in the open air</span></div>
+                    <div><strong>1948</strong><span>Family recipe since</span></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-art" data-aos="fade-left" data-aos-delay="150">
+                    <svg viewBox="0 0 420 460" class="root-svg" aria-hidden="true">
+                        <path class="root-path root-path--main"
+                            d="M210 40 C 190 120, 230 160, 210 230 C 195 290, 150 300, 120 360 C 100 400, 95 425, 80 445" />
+                        <path class="root-path" d="M210 230 C 235 270, 285 275, 310 330 C 322 358, 320 400, 330 440" />
+                        <path class="root-path" d="M195 150 C 160 140, 120 150, 95 120" />
+                        <path class="root-path" d="M225 150 C 260 135, 300 140, 325 110" />
+                        <path class="root-path" d="M180 300 C 150 310, 130 300, 105 320" />
+                        <ellipse class="root-leaf" cx="210" cy="42" rx="34" ry="46" />
+                        <ellipse class="root-leaf root-leaf--l" cx="170" cy="52" rx="22" ry="34" />
+                        <ellipse class="root-leaf root-leaf--r" cx="252" cy="54" rx="22" ry="34" />
+                    </svg>
+                    <div class="hero-art__ring"></div>
+                </div>
             </div>
 
         </div>
-
     </div>
 </section>
 
+<!-- ============ INGREDIENT STRIP ============ -->
+<div class="ingredient-strip">
+    <div class="ingredient-strip__track">
+        <span>Hibiscus</span><span>Amla</span><span>Shikakai</span><span>Neem</span>
+        <span>Turmeric</span><span>Multani Mitti</span><span>Vetiver</span><span>Manjal</span>
+        <span>Hibiscus</span><span>Amla</span><span>Shikakai</span><span>Neem</span>
+        <span>Turmeric</span><span>Multani Mitti</span><span>Vetiver</span><span>Manjal</span>
+    </div>
+</div>
 
-<section class="categories-section">
+<!-- ============ CATEGORIES ============ -->
+<section class="categories-section" id="categories">
     <div class="container">
 
-        <div class="section-header">
-
+        <div class="section-header" data-aos="fade-up">
             <div>
-                <span class="section-label">
-                    EXPLORE
-                </span>
-
-                <h2>
-                    Shop by Category
-                </h2>
+                <span class="section-label">Explore</span>
+                <h2>Shop by concern</h2>
             </div>
-
+            <p class="section-sub">Six ways in — pick where you'd like to start.</p>
         </div>
-
 
         <div class="row g-3">
-
             <div class="col-6 col-md-4 col-lg-2">
-
-                <div class="category-card">
-                    <i class="bi bi-flower1"></i>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="0">
+                    <mat-icon>spa</mat-icon>
                     <span>Hair Care</span>
                 </div>
-
             </div>
-
-
             <div class="col-6 col-md-4 col-lg-2">
-
-                <div class="category-card">
-                    <i class="bi bi-stars"></i>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="60">
+                    <mat-icon>auto_awesome</mat-icon>
                     <span>Face Care</span>
                 </div>
-
             </div>
-
-
             <div class="col-6 col-md-4 col-lg-2">
-
-                <div class="category-card">
-                    <i class="bi bi-droplet"></i>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="120">
+                    <mat-icon>water_drop</mat-icon>
                     <span>Skin Care</span>
                 </div>
-
             </div>
-
-
             <div class="col-6 col-md-4 col-lg-2">
-
-                <div class="category-card">
-                    <i class="bi bi-box-seam"></i>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="180">
+                    <mat-icon>inventory_2</mat-icon>
                     <span>Powders</span>
                 </div>
-
             </div>
-
-
             <div class="col-6 col-md-4 col-lg-2">
-
-                <div class="category-card">
-                    <i class="bi bi-heart"></i>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="240">
+                    <mat-icon>favorite</mat-icon>
                     <span>Wellness</span>
                 </div>
-
             </div>
-
-
             <div class="col-6 col-md-4 col-lg-2">
-
-                <div class="category-card">
-                    <i class="bi bi-gift"></i>
+                <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+                    <mat-icon>card_giftcard</mat-icon>
                     <span>Combos</span>
                 </div>
-
             </div>
-
         </div>
 
     </div>
 </section>
 
+<!-- ============ STORY / PRINCIPLES ============ -->
+<section class="story-section" id="story">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5" data-aos="fade-right">
+                <span class="section-label">Our process</span>
+                <h2>No shortcuts, <br>same as always.</h2>
+                <p>
+                    Every batch is washed, dried under open sun for up to five days,
+                    then stone-ground in small quantities so the oils never overheat.
+                    It takes longer. We haven't found a reason to change that.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <div class="row g-4">
+                    <div class="col-sm-4">
+                        <div class="principle" data-aos="fade-up" data-aos-delay="0">
+                            <span class="principle__mark">Sun</span>
+                            <h3>Dried outdoors</h3>
+                            <p>No machine dryers — just heat, air and patience.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="principle" data-aos="fade-up" data-aos-delay="100">
+                            <span class="principle__mark">Stone</span>
+                            <h3>Cold-ground</h3>
+                            <p>Low-heat grinding keeps the natural oils intact.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="principle" data-aos="fade-up" data-aos-delay="200">
+                            <span class="principle__mark">Plain</span>
+                            <h3>Nothing added</h3>
+                            <p>No fillers, silicones or synthetic fragrance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<section class="products-section">
-
+<!-- ============ PRODUCTS (dynamic) ============ -->
+<section class="products-section" id="products">
     <div class="container">
 
-        <div class="section-header">
-
+        <div class="section-header" data-aos="fade-up">
             <div>
-
-                <span class="section-label">
-                    OUR PRODUCTS
-                </span>
-
-                <h2>
-                    Popular Products
-                </h2>
-
+                <span class="section-label">Our products</span>
+                <h2>Popular products</h2>
             </div>
-
             <a routerLink="/products" class="view-all">
-                View All
-                <i class="bi bi-arrow-right"></i>
+                View all <mat-icon>arrow_forward</mat-icon>
             </a>
-
         </div>
-
 
         @if (loading) {
-
         <div class="text-center py-5">
-
             <div class="spinner-border" role="status"></div>
-
         </div>
-
         }
-
 
         @if (!loading && products.length > 0) {
-
         <div class="row g-4">
-
-            @for (
-            product of products;
-            track product._id
-            ) {
-
-            <div class="col-6 col-md-4 col-lg-3">
-
-                <app-product-card [product]="product" (addToCart)="addToCart($event)" (toggleWishlist)="          toggleWishlist($event)
-        " />
-
+            @for (product of products; track product._id; let i = $index) {
+            <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" [attr.data-aos-delay]="(i % 4) * 80">
+                <app-product-card [product]="product" (addToCart)="addToCart($event)"
+                    (toggleWishlist)="toggleWishlist($event)" />
             </div>
-
             }
-
         </div>
         }
 
-
         @if (!loading && products.length === 0) {
-
         <div class="text-center py-5">
-
-            <p>
-                No products available.
-            </p>
-
+            <p>No products available.</p>
         </div>
-
         }
 
     </div>
-
 </section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-card" data-aos="fade-up">
+            <div>
+                <h2>Get the first batch news.</h2>
+                <p>One email a month — new stock, small-batch drops, nothing else.</p>
+            </div>
+
+            <!-- <form class="newsletter-form" (ngSubmit)="subscribeNewsletter()">
+                <input type="email" name="email" [(ngModel)]="newsletterEmail" placeholder="you@email.com" required>
+                <button type="submit" class="btn btn-mg-primary">Subscribe</button>
+            </form> -->
+            <form class="newsletter-form">
+                <input type="email" name="email" placeholder="you@email.com" required>
+                <button type="submit" class="btn btn-mg-primary">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="mg-footer" id="footer">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <a href="#" class="mg-logo mg-logo--light">Mooligai</a>
+                <p>Traditional herbal powders, sun-dried and stone-ground in small batches.</p>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">Hair Care</a></li>
+                    <li><a href="#">Face Care</a></li>
+                    <li><a href="#">Skin Care</a></li>
+                    <li><a href="#">Combos</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">Our Roots</a></li>
+                    <li><a href="#">Sourcing</a></li>
+                    <li><a href="#">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h4>Visit</h4>
+                <p>No. 14, Big Street, Thanjavur, Tamil Nadu</p>
+            </div>
+        </div>
+        <div class="mg-footer__bottom">
+            <span>© 2026 Mooligai. All rights reserved.</span>
+        </div>
+    </div>
+</footer>

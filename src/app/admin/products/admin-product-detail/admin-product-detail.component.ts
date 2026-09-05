@@ -6,10 +6,8 @@ import {
   inject
 } from '@angular/core';
 
-import {
-  CommonModule
-} from '@angular/common';
-
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import {
   AdminProductService
 } from '../../../core/services/admin-product.service';
@@ -17,13 +15,16 @@ import {
 import {
   Product
 } from '../../../core/models/product.model';
+import { MatIcon } from "@angular/material/icon";
 
 
 @Component({
   selector: 'app-admin-product-detail',
 
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatIcon
   ],
 
   templateUrl:

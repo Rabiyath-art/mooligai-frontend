@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
     selector: 'app-admin-layout',
-    imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet],
+    imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet, MatIconModule],
     templateUrl: './admin-layout.component.html',
     styleUrl: './admin-layout.component.scss'
 })
 export class AdminLayoutComponent {
+
+    private readonly authService = inject(AuthService);
+    mobileMenuOpen = false;
     menuItems = [
 
         {
@@ -48,4 +53,17 @@ export class AdminLayoutComponent {
         }
 
     ];
+
+    toggleMobileMenu(): void {
+        this.mobileMenuOpen = !this.mobileMenuOpen;
+    }
+
+    closeMobileMenu(): void {
+        this.mobileMenuOpen = false;
+    }
+
+    logout(): void {
+        this.closeMobileMenu();
+        this.authService.handleLogout();
+    }
 }

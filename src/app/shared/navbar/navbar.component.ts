@@ -1,72 +1,63 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CartService } from '../../core/services/cart.service';
-import { WishlistService } from '../../core/services/wishlist.service';
+import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
     selector: 'app-navbar',
-    imports: [RouterLink, RouterLinkActive],
+    imports: [CommonModule, RouterLink, RouterLinkActive, MatIconModule],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
 
-    private readonly cartService = inject(CartService);
-    private readonly wishlistService = inject(WishlistService);
     private readonly authService = inject(AuthService);
 
+    isLoggedIn = false;
+    userMenuOpen = false;
+    mobileMenuOpen = false;
     cartCount = 0;
     wishlistCount = 0;
-    isLoggedIn = false;
 
     ngOnInit(): void {
-
         this.authService.isLoggedIn$.subscribe(loggedIn => {
             this.isLoggedIn = loggedIn;
         });
-
-        this.cartService.cartCount$.subscribe(count => {
-            this.cartCount = count;
-        });
-
-        this.wishlistService.wishlistCount$.subscribe(count => {
-            this.wishlistCount = count;
-        });
-
-        this.loadCartCount();
-        this.loadWishlistCount();
     }
 
-    private loadCartCount(): void {
-        this.cartService.getCart().subscribe({
-            next: (response) => {
-                this.cartService.updateCartCount(response.data);
-            },
 
-            error: () => {
-                // User may not be logged in.
-                this.cartCount = 0;
-            }
-        });
+    toggleMobileMenu(): void {
+        this.mobileMenuOpen = !this.mobileMenuOpen;
+        if (this.mobileMenuOpen) {
+            this.userMenuOpen = false;
+        }
     }
 
-    private loadWishlistCount(): void {
-        this.wishlistService.getWishlist().subscribe({
-            next: (response) => {
-                this.wishlistService.updateWishlistCount(response.data);
-            },
 
-            error: () => {
-                this.wishlistCount = 0;
-            }
-        });
+    closeMobileMenu(): void {
+        this.mobileMenuOpen = false;
+    }
+
+    toggleUserMenu(): void {
+        this.userMenuOpen = !this.userMenuOpen;
+    }
+
+    closeUserMenu(): void {
+        this.userMenuOpen = false;
     }
 
     logout(): void {
+        this.userMenuOpen = false;
+        this.mobileMenuOpen = false;
+        this.authService.handleLogout();
+    }
 
-        this.authService
-            .handleLogout();
-
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.mg-user-dropdown')) {
+            this.userMenuOpen = false;
+        }
     }
 }

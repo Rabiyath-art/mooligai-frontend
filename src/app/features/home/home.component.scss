@@ -1,193 +1,634 @@
+/* =========================================================
+   MOOLIGAI — design tokens
+   ========================================================= */
+:root {
+    --bg: #FAF6EC;
+    --bg-alt: #F1ECDB;
+    --ink: #22281E;
+    --ink-soft: #55604F;
+    --forest: #33513E;
+    --forest-dark: #223529;
+    --turmeric: #C98A2B;
+    --turmeric-soft: #F1D9AC;
+    --sand: #E4DEC7;
+    --white: #FFFFFF;
+
+    --font-display: "Fraunces", serif;
+    --font-body: "Manrope", sans-serif;
+
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --ease: cubic-bezier(.22, .68, 0, 1);
+}
+
+/* =========================================================
+   MATERIAL ICONS — sizing/alignment to match the old bi- icons
+   ========================================================= */
+mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+.mg-icon-btn mat-icon,
+.wishlist-btn mat-icon,
+.btn-add mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.category-card mat-icon {
+    font-size: 26px;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    color: var(--forest);
+}
+
+.hero-cta__link mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: var(--turmeric);
+}
+
+.btn-mg-primary mat-icon {
+    margin-left: 6px;
+}
+
+.view-all mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.mg-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(250, 246, 236, 0.9);
+    backdrop-filter: blur(8px);
+    transition: box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+}
+
+.mg-nav--scrolled {
+    box-shadow: 0 4px 20px rgba(34, 40, 30, 0.06);
+}
+
+.mg-nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+}
+
+.mg-logo {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--forest-dark);
+    font-style: italic;
+}
+
+.mg-nav__links {
+    list-style: none;
+    display: flex;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+}
+
+.mg-nav__links a {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 15px;
+    position: relative;
+}
+
+.mg-nav__links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: var(--turmeric);
+    transition: width 0.25s var(--ease);
+}
+
+.mg-nav__links a:hover::after {
+    width: 100%;
+}
+
+.mg-nav__actions {
+    display: flex;
+    gap: 10px;
+}
+
+.mg-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--sand);
+    background: var(--white);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.mg-icon-btn:hover {
+    transform: translateY(-2px);
+}
+
+.mg-icon-btn--fill {
+    background: var(--forest);
+    color: var(--white);
+    border-color: var(--forest);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.btn-mg-primary {
+    background: var(--forest);
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    padding: 15px 30px;
+    font-weight: 700;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.btn-mg-primary:hover {
+    background: var(--forest-dark);
+    transform: translateY(-2px);
+    color: var(--white);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
 .hero-section {
-    padding: 80px 0;
-    background: #f2f6ef;
+    padding: 70px 0 40px;
+    overflow: hidden;
 }
 
 .hero-badge {
     display: inline-block;
-    margin-bottom: 20px;
-    padding: 8px 14px;
+    margin-bottom: 22px;
+    padding: 8px 16px;
     border-radius: 30px;
-    background: #ffffff;
-    font-size: 14px;
+    background: var(--turmeric-soft);
+    color: var(--forest-dark);
+    font-size: 13px;
+    font-weight: 700;
 }
 
 .hero-section h1 {
-    font-size: clamp(42px, 6vw, 72px);
-    font-weight: 700;
-    line-height: 1.05;
-    margin-bottom: 24px;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.08;
+    margin-bottom: 22px;
+    letter-spacing: -0.01em;
 }
 
 .hero-section p {
-    max-width: 560px;
-    font-size: 18px;
-    line-height: 1.7;
+    max-width: 480px;
+    font-size: 17px;
+    color: var(--ink-soft);
     margin-bottom: 30px;
 }
 
-.hero-image {
-    height: 400px;
-    border-radius: 30px;
-    background: #dfe8d8;
+.hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    margin-bottom: 46px;
+    flex-wrap: wrap;
+}
 
+.hero-cta__link {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 40px;
+    padding-top: 26px;
+    border-top: 1px solid var(--sand);
+    max-width: 480px;
+}
+
+.hero-stats strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--forest-dark);
+}
+
+.hero-stats span {
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+
+/* --- hero root illustration --- */
+.hero-art {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 100px;
+    padding: 30px;
 }
 
+.hero-art__ring {
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #E9E2C8 0%, var(--bg-alt) 70%);
+    z-index: 0;
+}
+
+.root-svg {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+}
+
+.root-path {
+    fill: none;
+    stroke: var(--forest);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+}
+
+.mg-loaded .root-path,
+.hero-art.aos-animate .root-path {
+    animation: mg-draw 1.6s var(--ease) forwards;
+    animation-delay: 0.5s;
+}
+
+.root-path--main {
+    stroke-width: 5;
+}
+
+@keyframes mg-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.root-leaf {
+    fill: var(--turmeric-soft);
+    stroke: var(--turmeric);
+    stroke-width: 2;
+    opacity: 0;
+    transform-origin: 210px 42px;
+}
+
+.mg-loaded .root-leaf,
+.hero-art.aos-animate .root-leaf {
+    animation: mg-leaf-pop 0.6s var(--ease) forwards;
+    animation-delay: 1.9s;
+}
+
+.mg-loaded .root-leaf--l,
+.hero-art.aos-animate .root-leaf--l {
+    animation-delay: 2.05s;
+}
+
+.mg-loaded .root-leaf--r,
+.hero-art.aos-animate .root-leaf--r {
+    animation-delay: 2.05s;
+}
+
+@keyframes mg-leaf-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================================================
+   INGREDIENT MARQUEE
+   ========================================================= */
+.ingredient-strip {
+    background: var(--forest);
+    overflow: hidden;
+    padding: 14px 0;
+}
+
+.ingredient-strip__track {
+    display: flex;
+    width: max-content;
+    gap: 46px;
+    animation: mg-scroll 26s linear infinite;
+}
+
+.ingredient-strip__track span {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--turmeric-soft);
+    white-space: nowrap;
+}
+
+@keyframes mg-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* =========================================================
+   SHARED SECTION HEADERS
+   ========================================================= */
 .categories-section,
+.story-section,
 .products-section {
-    padding: 70px 0;
+    padding: 80px 0;
+}
+
+.story-section {
+    background: var(--bg-alt);
 }
 
 .products-section {
-    background: #ffffff;
-}
-
-.section-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
+    background: var(--bg);
 }
 
 .section-header {
     display: flex;
     align-items: end;
     justify-content: space-between;
-    margin-bottom: 35px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .section-header h2 {
     margin-top: 8px;
-    font-size: 34px;
-    font-weight: 700;
+    font-size: 32px;
+}
+
+.section-sub {
+    color: var(--ink-soft);
+    margin-bottom: 6px;
 }
 
 .view-all {
-    color: #212529;
-    text-decoration: none;
-    font-weight: 600;
+    color: var(--forest-dark);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
+/* =========================================================
+   CATEGORY CARDS
+   ========================================================= */
 .category-card {
-    min-height: 130px;
-    padding: 20px;
-
-    border: 1px solid #e9ecef;
-    border-radius: 16px;
-
+    min-height: 138px;
+    padding: 22px;
+    border: 1px solid var(--sand);
+    border-radius: var(--radius-md) 8px var(--radius-md) 8px;
+    background: var(--white);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 12px;
-
-    transition: 0.2s ease;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 
 .category-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.category-card i {
-    font-size: 28px;
+    transform: translateY(-5px);
+    box-shadow: 0 16px 30px rgba(51, 81, 62, 0.12);
+    border-color: var(--forest);
 }
 
 .category-card span {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 14px;
 }
 
-.product-card {
+/* =========================================================
+   STORY / PRINCIPLES
+   ========================================================= */
+.story-section h2 {
+    font-size: 36px;
+    margin: 10px 0 20px;
+}
+
+.story-section p {
+    color: var(--ink-soft);
+    max-width: 420px;
+}
+
+.principle {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 26px 22px;
     height: 100%;
-    overflow: hidden;
-
-    border: 1px solid #e9ecef;
-    border-radius: 18px;
-
-    background: #ffffff;
-
-    transition: 0.2s ease;
+    border: 1px solid var(--sand);
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+.principle__mark {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--turmeric);
+    border-bottom: 2px solid var(--turmeric-soft);
+    padding-bottom: 4px;
+    margin-bottom: 14px;
 }
 
-.product-image {
-    position: relative;
-
-    height: 260px;
-
-    background: #f6f6f4;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.product-image>i {
-    font-size: 50px;
-    color: #adb5bd;
-}
-
-.wishlist-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-
-    width: 38px;
-    height: 38px;
-
-    border: 0;
-    border-radius: 50%;
-
-    background: #ffffff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-content {
-    padding: 18px;
-}
-
-.product-content small {
-    color: #6c757d;
-}
-
-.product-content h3 {
-    margin: 8px 0 18px;
-
+.principle h3 {
     font-size: 18px;
-    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.principle p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+}
+
+/* =========================================================
+   PRODUCTS SECTION (cards themselves now live in app-product-card)
+   ========================================================= */
+.spinner-border {
+    color: var(--forest);
+}
+
+/* =========================================================
+   NEWSLETTER
+   ========================================================= */
+.newsletter-section {
+    padding: 0 0 90px;
+}
+
+.newsletter-card {
+    background: var(--forest);
+    border-radius: var(--radius-lg);
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    color: var(--white);
+}
+
+.newsletter-card h2 {
+    color: var(--white);
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.newsletter-card p {
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.newsletter-form input {
+    border: none;
+    border-radius: 100px;
+    padding: 14px 20px;
+    min-width: 240px;
+    font-family: var(--font-body);
+}
+
+.newsletter-form input:focus {
+    outline: 2px solid var(--turmeric-soft);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.mg-footer {
+    background: var(--forest-dark);
+    color: rgba(255, 255, 255, 0.75);
+    padding: 70px 0 20px;
+}
+
+.mg-logo--light {
+    color: var(--white);
+    margin-bottom: 14px;
+    display: inline-block;
+}
+
+.mg-footer p {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.mg-footer h4 {
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.mg-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mg-footer ul li {
+    margin-bottom: 10px;
+}
+
+.mg-footer ul a {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+}
+
+.mg-footer ul a:hover {
+    color: var(--turmeric-soft);
+}
+
+.mg-footer__bottom {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 13px;
+}
+
+/* =========================================================
+   AOS — respect reduced-motion (the package doesn't do this itself)
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 991px) {
+    .hero-art {
+        margin-top: 40px;
+    }
+
+    .newsletter-card {
+        padding: 34px;
+    }
 }
 
 @media (max-width: 767px) {
-
     .hero-section {
-        padding: 50px 0;
+        padding: 40px 0 10px;
     }
 
-    .hero-image {
-        height: 250px;
-        margin-top: 35px;
+    .hero-stats {
+        gap: 26px;
     }
 
-    .product-image {
-        height: 200px;
+    .newsletter-form input {
+        min-width: 0;
+        flex: 1;
     }
-
 }

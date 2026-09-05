@@ -1,5 +1,115 @@
 <div class="dashboard">
 
+    <!-- ======================================== -->
+    <!-- LOADING -->
+    <!-- ======================================== -->
+
+    @if (loading) {
+
+    <div class="dashboard-loading">
+
+        <div class="page-title-skeleton">
+
+            <div class="skeleton eyebrow-skeleton"></div>
+
+            <div class="skeleton title-skeleton"></div>
+
+        </div>
+
+
+        <div class="row g-3 mb-4">
+
+            @for (item of [1, 2, 3, 4]; track item) {
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="stat-card skeleton-card">
+
+                    <div class="skeleton icon-skeleton"></div>
+
+                    <div class="skeleton-content">
+
+                        <div class="skeleton text-skeleton"></div>
+
+                        <div class="skeleton value-skeleton"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+
+        <div class="content-card">
+
+            <div class="skeleton heading-skeleton"></div>
+
+            <div class="skeleton table-skeleton"></div>
+
+        </div>
+
+    </div>
+
+    }
+
+
+    <!-- ======================================== -->
+    <!-- ERROR -->
+    <!-- ======================================== -->
+
+    @else if (errorMessage) {
+
+    <div class="error-card">
+
+        <div class="error-icon">
+
+            <mat-icon>
+                error_outline
+            </mat-icon>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Unable to load dashboard
+            </h3>
+
+            <p>
+                {{ errorMessage }}
+            </p>
+
+
+            <button type="button" class="btn btn-dark" (click)="retry()">
+
+                <mat-icon>
+                    refresh
+                </mat-icon>
+
+                Try Again
+
+            </button>
+
+        </div>
+
+    </div>
+
+    }
+
+
+    <!-- ======================================== -->
+    <!-- DASHBOARD -->
+    <!-- ======================================== -->
+
+    @else {
+
+    <!-- PAGE HEADER -->
+
     <div class="page-title">
 
         <div>
@@ -12,12 +122,18 @@
                 Dashboard
             </h2>
 
+            <p>
+                Here's what's happening with your store today.
+            </p>
+
         </div>
 
     </div>
 
 
+    <!-- ======================================== -->
     <!-- STAT CARDS -->
+    <!-- ======================================== -->
 
     <div class="row g-3 mb-4">
 
@@ -32,18 +148,19 @@
 
                 <div class="stat-icon">
 
-                    <span class="material-symbols-outlined">
+                    <mat-icon>
                         {{ stat.icon }}
-                    </span>
+                    </mat-icon>
 
                 </div>
 
 
-                <div>
+                <div class="stat-content">
 
                     <span class="stat-title">
                         {{ stat.title }}
                     </span>
+
 
                     <h3>
                         {{ stat.value }}
@@ -60,7 +177,9 @@
     </div>
 
 
+    <!-- ======================================== -->
     <!-- RECENT ORDERS -->
+    <!-- ======================================== -->
 
     <div class="content-card">
 
@@ -76,15 +195,27 @@
                     Recent Orders
                 </h3>
 
+                <p>
+                    Latest orders placed in your store.
+                </p>
+
             </div>
 
 
             <a routerLink="/admin/orders" class="view-all">
+
                 View All
+
+                <mat-icon>
+                    arrow_forward
+                </mat-icon>
+
             </a>
 
         </div>
 
+
+        @if (recentOrders.length > 0) {
 
         <div class="table-responsive">
 
@@ -107,6 +238,10 @@
                         </th>
 
                         <th>
+                            Payment
+                        </th>
+
+                        <th>
                             Status
                         </th>
 
@@ -119,37 +254,121 @@
 
                     @for (
                     order of recentOrders;
-                    track order.id
+                    track order._id
                     ) {
 
                     <tr>
 
+                        <!-- ORDER -->
+
                         <td>
-                            <strong>
-                                {{ order.id }}
+
+                            <div class="order-info">
+
+                                <div class="order-icon">
+
+                                    <mat-icon>
+                                        shopping_bag
+                                    </mat-icon>
+
+                                </div>
+
+
+                                <strong>
+                                    {{ getOrderId(order) }}
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- CUSTOMER -->
+
+                        <td>
+
+                            <div class="customer-info">
+
+                                <div class="customer-avatar">
+
+                                    {{
+                                    getCustomerName(order)
+                                    .charAt(0)
+                                    .toUpperCase()
+                                    }}
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        {{ getCustomerName(order) }}
+                                    </strong>
+
+                                    <small>
+                                        {{ order.user?.email || '—' }}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- AMOUNT -->
+
+                        <td>
+
+                            <strong class="amount">
+
+                                {{
+                                formatCurrency(
+                                order.totalAmount
+                                )
+                                }}
+
                             </strong>
+
                         </td>
 
-                        <td>
-                            {{ order.customer }}
-                        </td>
 
-                        <td>
-                            {{ order.amount }}
-                        </td>
+                        <!-- PAYMENT -->
 
                         <td>
 
-                            <span class="status" [class.paid]="
-                    order.status === 'Paid'
-                  " [class.pending]="
-                    order.status === 'Pending'
-                  " [class.shipped]="
-                    order.status === 'Shipped'
-                  " [class.delivered]="
-                    order.status === 'Delivered'
-                  ">
-                                {{ order.status }}
+                            <span class="payment-badge" [class.paid]="
+                                                order.payment?.status === 'paid'
+                                            ">
+
+                                <span class="payment-dot"></span>
+
+                                {{
+                                order.payment?.status || 'Pending'
+                                }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <span class="status" [ngClass]="
+                                                getStatusClass(
+                                                    order.orderStatus
+                                                )
+                                            ">
+
+                                {{
+                                getStatusLabel(
+                                order.orderStatus
+                                )
+                                }}
+
                             </span>
 
                         </td>
@@ -164,6 +383,39 @@
 
         </div>
 
+        }
+
+
+        <!-- EMPTY -->
+
+        @else {
+
+        <div class="empty-orders">
+
+            <div class="empty-icon">
+
+                <mat-icon>
+                    shopping_bag
+                </mat-icon>
+
+            </div>
+
+
+            <h4>
+                No orders yet
+            </h4>
+
+
+            <p>
+                New orders will appear here.
+            </p>
+
+        </div>
+
+        }
+
     </div>
+
+    }
 
 </div>

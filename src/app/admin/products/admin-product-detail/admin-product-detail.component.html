@@ -36,9 +36,9 @@
 
             <button type="button" class="close-btn" (click)="closeModal()">
 
-                <span class="material-symbols-outlined">
+                <mat-icon>
                     close
-                </span>
+                </mat-icon>
 
             </button>
 
@@ -68,19 +68,11 @@
                 }
 
                 @else {
-
                 <div class="image-placeholder">
-
-                    <span class="material-symbols-outlined">
-                        image
-                    </span>
-
+                    <mat-icon> image </mat-icon>
                     No image
-
                 </div>
-
                 }
-
             </div>
 
 
@@ -282,39 +274,20 @@
             <!-- DELETE -->
 
             <button type="button" class="btn btn-outline-danger" (click)="deleteProduct()">
-
-                <span class="material-symbols-outlined">
-                    delete
-                </span>
-
+                <mat-icon> delete </mat-icon>
                 Delete
-
             </button>
 
-
-
-            <!-- STATUS -->
-
             <button type="button" class="btn btn-outline-dark" (click)="toggleStatus()" [disabled]="updatingStatus">
-
                 @if (updatingStatus) {
-
                 Updating...
-
                 }
-
-                @else if (
-                product.isActive
-                ) {
-
+                @else if ( product.isActive ) {
                 Deactivate
-
                 }
 
                 @else {
-
                 Activate
-
                 }
 
             </button>
@@ -325,9 +298,9 @@
 
             <button type="button" class="btn btn-dark" (click)="editProduct()">
 
-                <span class="material-symbols-outlined">
+                <mat-icon>
                     edit
-                </span>
+                </mat-icon>
 
                 Edit Product
 

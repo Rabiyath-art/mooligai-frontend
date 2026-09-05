@@ -1,14 +1,33 @@
 <div class="admin-layout">
 
-    <aside class="sidebar">
+    <!-- =========================================
+         MOBILE OVERLAY
+    ========================================== -->
+
+    @if (mobileMenuOpen) {
+
+    <div class="sidebar-overlay" (click)="closeMobileMenu()">
+    </div>
+
+    }
+
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar" [class.sidebar--mobile-open]="mobileMenuOpen">
+
+        <!-- BRAND -->
 
         <div class="brand">
 
-            <div class="brand-icon">
+            <a routerLink="/admin/dashboard" class="brand-icon" (click)="closeMobileMenu()">
                 M
-            </div>
+            </a>
 
-            <div>
+            <div class="brand-text">
+
                 <strong>
                     Mooligai
                 </strong>
@@ -16,21 +35,36 @@
                 <small>
                     ADMIN
                 </small>
+
             </div>
+
+
+            <!-- MOBILE CLOSE -->
+
+            <button type="button" class="sidebar-close" (click)="closeMobileMenu()" aria-label="Close menu">
+
+                <mat-icon>
+                    close
+                </mat-icon>
+
+            </button>
 
         </div>
 
 
+        <!-- NAVIGATION -->
+
         <nav class="sidebar-nav">
 
-            @for ( item of menuItems; track item.route ) {
-            <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{
-            exact: item.label === 'Dashboard'
-          }" class="nav-item">
+            @for (item of menuItems; track item.route) {
 
-                <span class="material-symbols-outlined">
+            <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{
+                        exact: item.label === 'Dashboard'
+                    }" class="nav-item" (click)="closeMobileMenu()">
+
+                <mat-icon>
                     {{ item.icon }}
-                </span>
+                </mat-icon>
 
                 <span>
                     {{ item.label }}
@@ -43,15 +77,19 @@
         </nav>
 
 
+        <!-- SIDEBAR BOTTOM -->
+
         <div class="sidebar-bottom">
 
-            <button class="logout-button">
+            <button type="button" class="logout-button" (click)="logout()">
 
-                <span class="material-symbols-outlined">
+                <mat-icon>
                     logout
-                </span>
+                </mat-icon>
 
-                Logout
+                <span>
+                    Logout
+                </span>
 
             </button>
 
@@ -60,13 +98,37 @@
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- =========================================
+         MAIN
+    ========================================== -->
 
     <main class="main-content">
 
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
         <header class="admin-header">
 
-            <div>
+            <!-- MOBILE MENU BUTTON -->
+
+            <button type="button" class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Open menu">
+
+                <mat-icon>
+                    menu
+                </mat-icon>
+
+            </button>
+
+
+            <!-- PAGE TITLE -->
+
+            <div class="header-title">
+
+                <span>
+                    ADMINISTRATION
+                </span>
 
                 <h1>
                     Admin Panel
@@ -75,13 +137,19 @@
             </div>
 
 
+            <!-- PROFILE -->
+
             <div class="admin-profile">
 
                 <div class="profile-avatar">
-                    A
+
+                    <mat-icon>
+                        person
+                    </mat-icon>
+
                 </div>
 
-                <div>
+                <div class="profile-info">
 
                     <strong>
                         Admin
@@ -98,6 +166,10 @@
         </header>
 
 
+        <!-- =====================================
+             PAGE CONTENT
+        ====================================== -->
+
         <section class="page-content">
 
             <router-outlet />
@@ -105,5 +177,4 @@
         </section>
 
     </main>
-
 </div>

@@ -1,622 +1,219 @@
-import {
-    Component,
-    OnInit,
-    inject
-} from '@angular/core';
-
-import {
-    CommonModule
-} from '@angular/common';
-
-import {
-    AdminProductService
-} from '../../../core/services/admin-product.service';
-
-import {
-    Product
-} from '../../../core/models/product.model';
-
-import {
-    AdminProductDetailComponent
-} from '../admin-product-detail/admin-product-detail.component';
-
-import {
-    AdminProductCreateComponent
-} from '../admin-product-create/admin-product-create.component';
-
-import {
-    AdminProductEditComponent
-} from '../admin-product-edit/admin-product-edit.component';
-
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { AdminProductService } from '../../../core/services/admin-product.service';
+import { Product } from '../../../core/models/product.model';
+import { AdminProductDetailComponent } from '../admin-product-detail/admin-product-detail.component';
+import { AdminProductCreateComponent } from '../admin-product-create/admin-product-create.component';
+import { AdminProductEditComponent } from '../admin-product-edit/admin-product-edit.component';
 
 @Component({
     selector: 'app-admin-products',
-
-    imports: [
-        CommonModule,
-        AdminProductDetailComponent,
-        AdminProductCreateComponent,
-        AdminProductEditComponent
-    ],
-
-    templateUrl:
-        './admin-products.component.html',
-
-    styleUrl:
-        './admin-products.component.scss'
+    imports: [CommonModule, FormsModule, MatIconModule, AdminProductDetailComponent, AdminProductCreateComponent, AdminProductEditComponent],
+    templateUrl: './admin-products.component.html',
+    styleUrl: './admin-products.component.scss'
 })
-export class AdminProductsComponent
-    implements OnInit {
+export class AdminProductsComponent implements OnInit {
 
-
-    // =====================================================
-    // SERVICE
-    // =====================================================
-
-    private readonly productService =
-        inject(AdminProductService);
-
-
-
-    // =====================================================
-    // PRODUCTS
-    // =====================================================
-
+    private readonly productService = inject(AdminProductService);
     products: Product[] = [];
-
-
     loading = false;
-
     errorMessage = '';
-
-
-
-    // =====================================================
-    // PAGINATION
-    // =====================================================
-
+    searchTerm = '';
+    statusFilter = '';
+    stockFilter = '';
+    sortFilter = '';
     currentPage = 1;
-
     limit = 10;
-
     total = 0;
-
     totalPages = 0;
 
-
-
-    // =====================================================
-    // POPUPS
-    // =====================================================
-
     showDetailModal = false;
-
     showCreateModal = false;
-
     showEditModal = false;
-
     showDeleteModal = false;
 
-
-
-    // =====================================================
-    // SELECTED PRODUCT
-    // =====================================================
-
-    selectedProduct:
-        Product | null = null;
-
-
-
-    // =====================================================
-    // LOADING STATES
-    // =====================================================
-
-    updatingProductId:
-        string | null = null;
-
+    selectedProduct: Product | null = null;
+    updatingProductId: string | null = null;
     deleting = false;
 
+    get pageNumbers(): number[] {
+        const pages: number[] = [];
+        const maxVisiblePages = 5;
+        let start = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
+        let end = Math.min(this.totalPages, start + maxVisiblePages - 1);
 
+        if (end - start + 1 < maxVisiblePages) {
+            start = Math.max(1, end - maxVisiblePages + 1);
+        }
 
-    // =====================================================
-    // INIT
-    // =====================================================
+        for (let page = start; page <= end; page++) {
+            pages.push(page);
+        }
+
+        return pages;
+    }
 
     ngOnInit(): void {
-
         this.loadProducts();
-
     }
-
-
-
-    // =====================================================
-    // LOAD PRODUCTS
-    // =====================================================
 
     loadProducts(): void {
-
         this.loading = true;
-
         this.errorMessage = '';
 
-
-        this.productService
-            .getProducts({
-                page: this.currentPage,
-                limit: this.limit
-            })
-            .subscribe({
-
-                next: (response) => {
-
-                    console.log(
-                        'Admin products response:',
-                        response
-                    );
-
-
-                    this.products =
-                        response.data || [];
-
-
-                    if (response.pagination) {
-
-                        this.total =
-                            response.pagination.total;
-
-                        this.currentPage =
-                            response.pagination.page;
-
-                        this.limit =
-                            response.pagination.limit;
-
-                        this.totalPages =
-                            response.pagination.totalPages;
-
-                    }
-
-
-                    this.loading = false;
-
-                },
-
-
-                error: (error) => {
-
-                    console.error(
-                        'Admin products error:',
-                        error
-                    );
-
-
-                    this.errorMessage =
-                        error.error?.message ||
-                        'Failed to load products';
-
-
-                    this.loading = false;
-
+        this.productService.getProducts({
+            search: this.searchTerm.trim() || undefined,
+            status: this.statusFilter || undefined,
+            stock: this.stockFilter || undefined,
+            sort: this.sortFilter || undefined,
+            page: this.currentPage, limit: this.limit
+        }).subscribe({
+            next: (response) => {
+                this.products = response.data || [];
+                if (response.pagination) {
+                    this.total = response.pagination.total;
+                    this.currentPage = response.pagination.page;
+                    this.limit = response.pagination.limit;
+                    this.totalPages = response.pagination.totalPages;
                 }
+                this.loading = false;
+            },
 
-            });
-
+            error: (error) => {
+                console.error('Admin products error:', error);
+                this.errorMessage = error.error?.message || 'Failed to load products';
+                this.loading = false;
+            }
+        });
     }
 
+    applyFilters(): void {
+        this.currentPage = 1;
+        this.loadProducts();
+    }
 
+    clearSearch(): void {
+        this.searchTerm = '';
+        this.applyFilters();
+    }
 
-    // =====================================================
-    // OPEN DETAIL
-    // =====================================================
+    resetFilters(): void {
+        this.searchTerm = '';
+        this.statusFilter = '';
+        this.stockFilter = '';
+        this.sortFilter = '';
+        this.currentPage = 1;
+        this.loadProducts();
+    }
 
-    openDetail(
-        product: Product
-    ): void {
-
-        console.log(
-            'Opening detail popup:',
-            product
-        );
-
-
+    openDetail(product: Product): void {
         this.closeAllPopups();
-
-
-        this.selectedProduct =
-            product;
-
-
-        this.showDetailModal =
-            true;
-
+        this.selectedProduct = product;
+        this.showDetailModal = true;
     }
-
-
-
-    // =====================================================
-    // CLOSE DETAIL
-    // =====================================================
 
     closeDetail(): void {
-
-        this.showDetailModal =
-            false;
-
-        this.selectedProduct =
-            null;
-
+        this.showDetailModal = false;
+        this.selectedProduct = null;
     }
-
-
-
-    // =====================================================
-    // OPEN CREATE
-    // =====================================================
 
     openCreate(): void {
-
-        console.log(
-            'Opening create popup'
-        );
-
-
         this.closeAllPopups();
-
-
-        this.selectedProduct =
-            null;
-
-
-        this.showCreateModal =
-            true;
-
+        this.selectedProduct = null;
+        this.showCreateModal = true;
     }
-
-
-
-    // =====================================================
-    // CLOSE CREATE
-    // =====================================================
 
     closeCreate(): void {
-
-        this.showCreateModal =
-            false;
-
+        this.showCreateModal = false;
     }
 
-
-
-    // =====================================================
-    // PRODUCT CREATED
-    // =====================================================
-
-    onProductCreated(
-        createdProduct?: Product
-    ): void {
-
-        console.log(
-            'Product created:',
-            createdProduct
-        );
-
-
-        this.showCreateModal =
-            false;
-
-
-        this.selectedProduct =
-            null;
-
-
-        this.currentPage =
-            1;
-
-
+    onProductCreated(createdProduct?: Product): void {
+        this.showCreateModal = false;
+        this.selectedProduct = null;
+        this.currentPage = 1;
         this.loadProducts();
-
     }
 
-
-
-    // =====================================================
-    // OPEN EDIT
-    // =====================================================
-
-    openEdit(
-        product: Product
-    ): void {
-
-        console.log(
-            'Opening edit popup:',
-            product
-        );
-
-
-        /*
-         * IMPORTANT:
-         *
-         * We DO NOT use router.navigate()
-         * here.
-         *
-         * We DO NOT use routerLink.
-         *
-         * We only switch popup state.
-         */
-
-
-        this.showDetailModal =
-            false;
-
-
-        this.showCreateModal =
-            false;
-
-
-        this.selectedProduct =
-            product;
-
-
-        this.showEditModal =
-            true;
-
+    openEdit(product: Product): void {
+        this.showDetailModal = false;
+        this.showCreateModal = false;
+        this.showDeleteModal = false;
+        this.selectedProduct = product;
+        this.showEditModal = true;
     }
-
-
-
-    // =====================================================
-    // CLOSE EDIT
-    // =====================================================
 
     closeEdit(): void {
-
-        this.showEditModal =
-            false;
-
-        this.selectedProduct =
-            null;
-
+        this.showEditModal = false;
+        this.selectedProduct = null;
     }
 
-
-
-    // =====================================================
-    // PRODUCT UPDATED
-    // =====================================================
-
-    onProductUpdated(
-        updatedProduct: Product
-    ): void {
-
-        console.log(
-            'Product updated:',
-            updatedProduct
-        );
-
-
-        /*
-         * Find product in table.
-         */
-
-        const index =
-            this.products.findIndex(
-                item =>
-                    item._id ===
-                    updatedProduct._id
-            );
-
-
-        /*
-         * Update table.
-         */
-
+    onProductUpdated(updatedProduct: Product): void {
+        const index = this.products.findIndex(item => item._id === updatedProduct._id);
         if (index !== -1) {
-
-            this.products[index] =
-                updatedProduct;
-
+            this.products[index] = updatedProduct;
         }
-
-
-        /*
-         * Close edit popup.
-         */
-
-        this.showEditModal =
-            false;
-
-
-        this.selectedProduct =
-            null;
-
+        this.showEditModal = false;
+        this.selectedProduct = null;
     }
 
-
-
-    // =====================================================
-    // PRODUCT STATUS CHANGED FROM DETAIL
-    // =====================================================
-
-    onProductStatusChanged(
-        updatedProduct: Product
-    ): void {
-
-        console.log(
-            'Product status changed:',
-            updatedProduct
-        );
-
-
-        const index =
-            this.products.findIndex(
-                item =>
-                    item._id ===
-                    updatedProduct._id
-            );
-
-
+    onProductStatusChanged(updatedProduct: Product): void {
+        const index = this.products.findIndex(item => item._id === updatedProduct._id);
         if (index !== -1) {
-
-            this.products[index] =
-                updatedProduct;
-
+            this.products[index] = updatedProduct;
         }
-
-
-        /*
-         * Keep detail popup open.
-         */
-
-        this.selectedProduct =
-            updatedProduct;
-
+        this.selectedProduct = updatedProduct;
     }
 
 
-
-    // =====================================================
-    // OPEN DELETE
-    // =====================================================
-
-    openDelete(
-        product: Product
-    ): void {
-
-        console.log(
-            'Opening delete popup:',
-            product
-        );
-
-
+    openDelete(product: Product): void {
         this.closeAllPopups();
-
-
-        this.selectedProduct =
-            product;
-
-
-        this.showDeleteModal =
-            true;
-
+        this.selectedProduct = product;
+        this.showDeleteModal = true;
     }
-
-
-
-    // =====================================================
-    // CLOSE DELETE
-    // =====================================================
 
     closeDelete(): void {
-
-        this.showDeleteModal =
-            false;
-
-        this.selectedProduct =
-            null;
-
+        if (this.deleting) {
+            return;
+        }
+        this.showDeleteModal = false;
+        this.selectedProduct = null;
     }
-
-
-
-    // =====================================================
-    // CONFIRM DELETE
-    // =====================================================
 
     confirmDelete(): void {
-
-        if (
-            !this.selectedProduct ||
-            this.deleting
-        ) {
-
+        if (!this.selectedProduct || this.deleting) {
             return;
-
         }
+        const product = this.selectedProduct;
+        this.deleting = true;
+        this.productService.deleteProduct(product._id).subscribe({
+            next: () => {
+                this.deleting = false;
+                this.showDeleteModal = false;
+                this.selectedProduct = null;
 
-
-        const product =
-            this.selectedProduct;
-
-
-        this.deleting =
-            true;
-
-
-        this.productService
-            .deleteProduct(
-                product._id
-            )
-            .subscribe({
-
-                next: () => {
-
-                    console.log(
-                        'Product deleted successfully'
-                    );
-
-
-                    this.deleting =
-                        false;
-
-
-                    this.showDeleteModal =
-                        false;
-
-
-                    this.selectedProduct =
-                        null;
-
-
-                    /*
-                     * Reload products.
-                     */
-
-                    this.loadProducts();
-
-                },
-
-
-                error: (error) => {
-
-                    console.error(
-                        'Delete product error:',
-                        error
-                    );
-
-
-                    this.deleting =
-                        false;
-
-
-                    alert(
-                        error.error?.message ||
-                        'Failed to delete product'
-                    );
-
+                if (this.products.length === 1 && this.currentPage > 1) {
+                    this.currentPage--;
                 }
 
-            });
+                this.loadProducts();
+            },
+
+            error: (error) => {
+                console.error('Delete product error:', error);
+                this.deleting = false;
+                alert(error.error?.message || 'Failed to delete product');
+
+            }
+        });
 
     }
 
 
-
-    // =====================================================
-    // TOGGLE STATUS
-    // =====================================================
-
-    toggleStatus(
-        product: Product
-    ): void {
-
-        if (
-            this.updatingProductId ===
-            product._id
-        ) {
-
+    toggleStatus(product: Product): void {
+        if (this.updatingProductId === product._id) {
             return;
-
         }
 
 
@@ -661,11 +258,6 @@ export class AdminProductsComponent
                         }
 
 
-                        /*
-                         * If detail popup is open
-                         * for this product, update it.
-                         */
-
                         if (
                             this.selectedProduct?._id ===
                             product._id
@@ -708,68 +300,33 @@ export class AdminProductsComponent
 
     }
 
-
-
-    // =====================================================
-    // CLOSE ALL POPUPS
-    // =====================================================
-
-    private closeAllPopups(): void {
-
-        this.showDetailModal =
-            false;
-
-        this.showCreateModal =
-            false;
-
-        this.showEditModal =
-            false;
-
-        this.showDeleteModal =
-            false;
-
+    goToPage(page: number): void {
+        if (page < 1 || page > this.totalPages || page === this.currentPage) {
+            return;
+        }
+        this.currentPage = page;
+        this.loadProducts();
     }
-
-
-
-    // =====================================================
-    // NEXT PAGE
-    // =====================================================
 
     nextPage(): void {
-
-        if (
-            this.currentPage <
-            this.totalPages
-        ) {
-
+        if (this.currentPage < this.totalPages) {
             this.currentPage++;
-
             this.loadProducts();
-
         }
-
     }
 
-
-
-    // =====================================================
-    // PREVIOUS PAGE
-    // =====================================================
-
     previousPage(): void {
-
-        if (
-            this.currentPage >
-            1
-        ) {
-
+        if (this.currentPage > 1) {
             this.currentPage--;
-
             this.loadProducts();
-
         }
+    }
 
+    private closeAllPopups(): void {
+        this.showDetailModal = false;
+        this.showCreateModal = false;
+        this.showEditModal = false;
+        this.showDeleteModal = false;
     }
 
 }

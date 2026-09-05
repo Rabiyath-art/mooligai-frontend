@@ -74,146 +74,56 @@ export class AuthService {
     }
 
 
+    loadCurrentUser(): void {
+        this.getCurrentUser().subscribe({
+            next: (response) => {
+                const user = response.data;
+                this.userSubject.next(user);
+                this.loggedInSubject.next(true);
+                this.authInitializedSubject.next(true);
+
+                // ROLE BASED REDIRECT
+                if (user.role === 'admin') {
+                    this.router.navigate(['/admin/dashboard']);
+                } else {
+                    this.router.navigate(['/']);
+                }
+            },
+
+            error: (error) => {
+                this.userSubject.next(null);
+                this.loggedInSubject.next(false);
+                this.authInitializedSubject.next(true);
+            }
+        });
+    }
+
+    // Then guards should handle admin navigation, not AuthService.loadCurrentUser().
+
     // loadCurrentUser(): void {
+    //     this.getCurrentUser().subscribe({
+    //         next: (response) => {
+    //             this.userSubject.next(response.data);
+    //             this.loggedInSubject.next(true);
+    //             this.authInitializedSubject.next(true);
+    //         },
 
-    //     this.getCurrentUser()
-    //         .subscribe({
-
-    //             next: (response) => {
-
-    //                 this.userSubject.next(
-    //                     response.data
-    //                 );
-
-    //                 this.loggedInSubject.next(
-    //                     true
-    //                 );
-
-    //                 this.authInitializedSubject.next(
-    //                     true
-    //                 );
-
-    //             },
-
-    //             error: () => {
-
-    //                 this.userSubject.next(null);
-
-    //                 this.loggedInSubject.next(
-    //                     false
-    //                 );
-
-    //                 this.authInitializedSubject.next(
-    //                     true
-    //                 );
-
-    //             }
-
-    //         });
+    //         error: (error) => {
+    //             this.userSubject.next(null);
+    //             this.loggedInSubject.next(false);
+    //             this.authInitializedSubject.next(true);
+    //         }
+    //     });
 
     // }
 
-    loadCurrentUser(): void {
-
-        console.log(
-            'AUTH: Loading current user...'
-        );
-
-        this.getCurrentUser()
-            .subscribe({
-
-                next: (response) => {
-
-                    console.log(
-                        'AUTH: Current user:',
-                        response.data
-                    );
-
-                    const user =
-                        response.data;
-
-                    this.userSubject.next(
-                        user
-                    );
-
-                    this.loggedInSubject.next(
-                        true
-                    );
-
-                    this.authInitializedSubject.next(
-                        true
-                    );
-
-
-                    // ROLE BASED REDIRECT
-
-                    if (user.role === 'admin') {
-
-                        console.log(
-                            'AUTH: Admin detected'
-                        );
-
-                        this.router.navigate([
-                            '/admin/dashboard'
-                        ]);
-
-                    } else {
-
-                        console.log(
-                            'AUTH: Normal user detected'
-                        );
-
-                        this.router.navigate([
-                            '/'
-                        ]);
-
-                    }
-
-                },
-
-                error: (error) => {
-
-                    console.error(
-                        'AUTH: /me failed:',
-                        error
-                    );
-
-                    this.userSubject.next(
-                        null
-                    );
-
-                    this.loggedInSubject.next(
-                        false
-                    );
-
-                    this.authInitializedSubject.next(
-                        true
-                    );
-
-                }
-
-            });
-
-    }
-
     loginWithGoogle(): void {
-
-        window.location.href =
-            `${this.apiUrl}/google`;
-
+        window.location.href = `${this.apiUrl}/google`;
     }
 
 
-    logout(): Observable<{
-        success: boolean;
-        message: string;
-    }> {
-
-        return this.http.post<{
-            success: boolean;
-            message: string;
-        }>(
-            `${this.apiUrl}/logout`,
+    logout(): Observable<{ success: boolean; message: string; }> {
+        return this.http.post<{ success: boolean; message: string; }>(`${this.apiUrl}/logout`,
             {},
             {
                 withCredentials: true

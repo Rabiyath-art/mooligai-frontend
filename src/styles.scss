@@ -1,4 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+:root {
+    --bg: #FAF6EC;
+    --bg-alt: #F1ECDB;
+    --ink: #22281E;
+    --ink-soft: #55604F;
+    --forest: #33513E;
+    --forest-dark: #223529;
+    --turmeric: #C98A2B;
+    --turmeric-soft: #F1D9AC;
+    --sand: #E4DEC7;
+    --white: #FFFFFF;
+
+    --font-display: "Fraunces", serif;
+    --font-body: "Manrope", sans-serif;
+
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --ease: cubic-bezier(.22, .68, 0, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.section-label {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--forest);
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--forest);
+    outline-offset: 3px;
+}

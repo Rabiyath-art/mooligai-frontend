@@ -1,78 +1,210 @@
 <div class="admin-products-page">
 
-
-    <!-- ================================================= -->
-    <!-- HEADER -->
-    <!-- ================================================= -->
-
     <div class="page-header">
-
-        <div>
-
+        <div class="page-heading">
             <span class="eyebrow">
                 INVENTORY
             </span>
 
-            <h2>
+            <h1>
                 Products
-            </h2>
+            </h1>
 
             <p>
-                Manage all products in your store.
+                Manage your products, stock and availability.
             </p>
 
         </div>
 
 
-        <!-- ADD PRODUCT -->
-
-        <button type="button" class="btn btn-dark" (click)="openCreate()">
-
-            <span class="material-symbols-outlined">
-                add
-            </span>
-
-            Add Product
+        <button type="button" class="add-product-btn" (click)="openCreate()">
+            <mat-icon> add </mat-icon>
+            <span> Add Product </span>
 
         </button>
 
     </div>
 
 
+    <!-- ========================================================= -->
+    <!-- TOOLBAR -->
+    <!-- ========================================================= -->
 
-    <!-- ================================================= -->
+    @if (!loading && !errorMessage) {
+
+    <div class="products-toolbar">
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <mat-icon>search</mat-icon>
+            <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (keyup.enter)="applyFilters()">
+
+            @if (searchTerm) {
+
+            <button type="button" class="clear-search" (click)="clearSearch()">
+
+                <mat-icon>close</mat-icon>
+
+            </button>
+
+            }
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <select class="filter-select" [(ngModel)]="statusFilter" (change)="applyFilters()">
+
+            <option value="">
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="inactive">
+                Inactive
+            </option>
+
+        </select>
+
+
+        <!-- STOCK -->
+
+        <select class="filter-select" [(ngModel)]="stockFilter" (change)="applyFilters()">
+
+            <option value="">
+                All Stock
+            </option>
+
+            <option value="available">
+                Available
+            </option>
+
+            <option value="low">
+                Low Stock
+            </option>
+
+            <option value="out">
+                Out of Stock
+            </option>
+
+        </select>
+
+
+        <!-- SORT -->
+
+        <select class="filter-select" [(ngModel)]="sortFilter" (change)="applyFilters()">
+
+            <option value="">
+                Latest
+            </option>
+
+            <option value="name_asc">
+                Name A-Z
+            </option>
+
+            <option value="name_desc">
+                Name Z-A
+            </option>
+
+            <option value="price_asc">
+                Price Low-High
+            </option>
+
+            <option value="price_desc">
+                Price High-Low
+            </option>
+
+            <option value="stock_asc">
+                Stock Low-High
+            </option>
+
+            <option value="stock_desc">
+                Stock High-Low
+            </option>
+
+        </select>
+
+
+        <!-- FILTER BUTTON -->
+
+        <button type="button" class="filter-reset-btn" (click)="resetFilters()" title="Reset filters">
+            <mat-icon>restart_alt</mat-icon>
+        </button>
+
+    </div>
+
+    }
+
+
+    <!-- ========================================================= -->
     <!-- LOADING -->
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
 
     @if (loading) {
 
-    <div class="text-center py-5">
+    <div class="loading-card">
 
-        <div class="spinner-border" role="status"></div>
+        <div class="loading-spinner"></div>
+
+        <h4>
+            Loading products
+        </h4>
+
+        <p>
+            Please wait while we fetch your inventory.
+        </p>
 
     </div>
 
     }
 
 
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
     <!-- ERROR -->
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
 
     @else if (errorMessage) {
 
-    <div class="alert alert-danger">
+    <div class="error-card">
 
-        {{ errorMessage }}
+        <div class="error-icon">
+
+            <mat-icon>
+                error
+            </mat-icon>
+
+        </div>
+
+        <div>
+
+            <h4>
+                Something went wrong
+            </h4>
+
+            <p>
+                {{ errorMessage }}
+            </p>
+
+            <button type="button" class="retry-btn" (click)="loadProducts()">
+                Try Again
+            </button>
+
+        </div>
 
     </div>
 
     }
 
 
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
     <!-- PRODUCT CONTENT -->
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
 
     @else {
 
@@ -80,9 +212,36 @@
 
     <div class="product-table-card">
 
+        <!-- TABLE TOP -->
+
+        <div class="table-top">
+
+            <div>
+
+                <strong>
+                    All Products
+                </strong>
+
+                <span>
+                    {{ total }} products
+                </span>
+
+            </div>
+
+            <div class="table-page-info">
+
+                Page {{ currentPage }} of {{ totalPages }}
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+
         <div class="table-responsive">
 
-            <table class="table align-middle mb-0">
+            <table class="products-table">
 
                 <thead>
 
@@ -108,7 +267,7 @@
                             Status
                         </th>
 
-                        <th class="text-end">
+                        <th class="actions-column">
                             Actions
                         </th>
 
@@ -126,7 +285,6 @@
 
                     <tr>
 
-
                         <!-- ================================= -->
                         <!-- PRODUCT -->
                         <!-- ================================= -->
@@ -134,9 +292,6 @@
                         <td>
 
                             <div class="product-info">
-
-
-                                <!-- IMAGE -->
 
                                 @if (product.images?.length) {
 
@@ -147,19 +302,11 @@
                                 @else {
 
                                 <div class="product-placeholder">
-
-                                    <span class="material-symbols-outlined">
-                                        image
-                                    </span>
-
+                                    <mat-icon>image</mat-icon>
                                 </div>
-
                                 }
 
-
-                                <!-- NAME -->
-
-                                <div>
+                                <div class="product-text">
 
                                     <button type="button" class="product-name" (click)="openDetail(product)">
 
@@ -167,12 +314,11 @@
 
                                     </button>
 
+                                    <span class="product-weight">
 
-                                    <small>
+                                        {{ product.weight || 'Weight not specified' }}
 
-                                        {{ product.weight || '-' }}
-
-                                    </small>
+                                    </span>
 
                                 </div>
 
@@ -181,17 +327,29 @@
                         </td>
 
 
-
                         <!-- ================================= -->
                         <!-- CATEGORY -->
                         <!-- ================================= -->
 
                         <td>
 
-                            {{ product.category?.name || '-' }}
+                            @if (product.category?.name) {
+
+                            <span class="category-name">
+                                {{ product.category.name }}
+                            </span>
+
+                            }
+
+                            @else {
+
+                            <span class="muted-text">
+                                Uncategorized
+                            </span>
+
+                            }
 
                         </td>
-
 
 
                         <!-- ================================= -->
@@ -200,10 +358,11 @@
 
                         <td>
 
-                            ₹{{ product.price }}
+                            <span class="price">
+                                ₹{{ product.price | number:'1.0-2' }}
+                            </span>
 
                         </td>
-
 
 
                         <!-- ================================= -->
@@ -212,10 +371,29 @@
 
                         <td>
 
-                            {{ product.stock }}
+                            @if (product.stock === 0) {
+
+                            <span class="stock-badge out">
+                                Out of stock
+                            </span>
+
+                            }
+
+                            @else if (product.stock <= 10) { <span class="stock-badge low">
+                                {{ product.stock }} left
+                                </span>
+
+                                }
+
+                                @else {
+
+                                <span class="stock-badge available">
+                                    {{ product.stock }} in stock
+                                </span>
+
+                                }
 
                         </td>
-
 
 
                         <!-- ================================= -->
@@ -226,22 +404,29 @@
 
                             @if (product.isActive) {
 
-                            <span class="status active">
+                            <span class="status-badge active">
+
+                                <span class="status-dot"></span>
+
                                 Active
+
                             </span>
 
                             }
 
                             @else {
 
-                            <span class="status inactive">
+                            <span class="status-badge inactive">
+
+                                <span class="status-dot"></span>
+
                                 Inactive
+
                             </span>
 
                             }
 
                         </td>
-
 
 
                         <!-- ================================= -->
@@ -252,81 +437,61 @@
 
                             <div class="action-buttons">
 
-
                                 <!-- VIEW -->
 
-                                <button type="button" class="btn btn-sm btn-outline-dark" title="View"
+                                <button type="button" class="action-btn view" title="View product"
                                     (click)="openDetail(product)">
-
-                                    <span class="material-symbols-outlined">
+                                    <mat-icon>
                                         visibility
-                                    </span>
-
+                                    </mat-icon>
                                 </button>
-
 
 
                                 <!-- EDIT -->
 
-                                <button type="button" class="btn btn-sm btn-outline-secondary" title="Edit"
+                                <button type="button" class="action-btn edit" title="Edit product"
                                     (click)="openEdit(product)">
-
-                                    <span class="material-symbols-outlined">
-                                        edit
-                                    </span>
-
+                                    <mat-icon>edit</mat-icon>
                                 </button>
-
 
 
                                 <!-- STATUS -->
 
-                                <button type="button" class="btn btn-sm btn-outline-warning"
-                                    (click)="toggleStatus(product)" [disabled]="updatingProductId === product._id"
-                                    [title]="
+                                <button type="button" class="action-btn status" [title]="
                                                     product.isActive
-                                                        ? 'Deactivate'
-                                                        : 'Activate'
-                                                ">
+                                                        ? 'Deactivate product'
+                                                        : 'Activate product'
+                                                " [disabled]="
+                                                    updatingProductId === product._id
+                                                " (click)="toggleStatus(product)">
 
                                     @if (
-                                    updatingProductId ===
-                                    product._id
+                                    updatingProductId === product._id
                                     ) {
 
-                                    <span class="material-symbols-outlined spin">
+                                    <mat-icon class="spinning">
                                         progress_activity
-                                    </span>
-
+                                    </mat-icon>
                                     }
 
                                     @else {
-
-                                    <span class="material-symbols-outlined">
-
+                                    <mat-icon>
                                         {{
                                         product.isActive
                                         ? 'visibility_off'
                                         : 'visibility'
                                         }}
 
-                                    </span>
-
+                                    </mat-icon>
                                     }
-
                                 </button>
-
-
 
                                 <!-- DELETE -->
 
-                                <button type="button" class="btn btn-sm btn-outline-danger" title="Delete"
+                                <button type="button" class="action-btn delete" title="Delete product"
                                     (click)="openDelete(product)">
 
-                                    <span class="material-symbols-outlined">
-                                        delete
-                                    </span>
-
+                                    <mat-icon>delete</mat-icon>
                                 </button>
 
                             </div>
@@ -343,75 +508,96 @@
 
         </div>
 
+
+        <!-- ================================================= -->
+        <!-- PAGINATION -->
+        <!-- ================================================= -->
+
+        @if (totalPages > 1) {
+
+        <div class="pagination">
+
+            <button type="button" class="pagination-btn" (click)="previousPage()" [disabled]="currentPage === 1">
+
+                <mat-icon>
+                    chevron_left
+                </mat-icon>
+
+                Previous
+
+            </button>
+
+
+            <div class="pagination-pages">
+
+                @for (
+                page of pageNumbers;
+                track page
+                ) {
+
+                <button type="button" class="page-number" [class.active]="page === currentPage"
+                    (click)="goToPage(page)">
+
+                    {{ page }}
+
+                </button>
+
+                }
+
+            </div>
+
+
+            <button type="button" class="pagination-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
+
+                Next
+
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+
+            </button>
+
+        </div>
+
+        }
+
     </div>
 
     }
 
 
-    <!-- ================================================= -->
-    <!-- EMPTY -->
-    <!-- ================================================= -->
+    <!-- ========================================================= -->
+    <!-- EMPTY STATE -->
+    <!-- ========================================================= -->
 
     @else {
 
     <div class="empty-state">
 
-        <span class="material-symbols-outlined">
-            inventory_2
-        </span>
+        <div class="empty-icon">
+            <mat-icon> inventory_2 </mat-icon>
+        </div>
 
-        <h4>
+        <h3>
             No products found
-        </h4>
+        </h3>
 
         <p>
-            Create your first product.
+            There are no products matching your current filters.
         </p>
 
+        <div class="empty-actions">
 
-        <button type="button" class="btn btn-dark" (click)="openCreate()">
+            <button type="button" class="secondary-btn" (click)="resetFilters()">
+                Clear Filters
+            </button>
 
-            Add Product
+            <button type="button" class="add-product-btn" (click)="openCreate()">
+                <mat-icon>add</mat-icon>
+                Add Product
+            </button>
 
-        </button>
-
-    </div>
-
-    }
-
-
-
-    <!-- ================================================= -->
-    <!-- PAGINATION -->
-    <!-- ================================================= -->
-
-    @if (totalPages > 1) {
-
-    <div class="pagination-wrapper">
-
-        <button type="button" class="btn btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
-
-            Previous
-
-        </button>
-
-
-        <span>
-
-            Page
-            {{ currentPage }}
-            of
-            {{ totalPages }}
-
-        </span>
-
-
-        <button type="button" class="btn btn-outline-secondary" (click)="nextPage()"
-            [disabled]="currentPage === totalPages">
-
-            Next
-
-        </button>
+        </div>
 
     </div>
 
@@ -423,14 +609,11 @@
 
 
 
-<!-- ================================================= -->
+<!-- ============================================================= -->
 <!-- DETAIL POPUP -->
-<!-- ================================================= -->
+<!-- ============================================================= -->
 
-@if (
-showDetailModal &&
-selectedProduct
-) {
+@if (showDetailModal &&selectedProduct) {
 
 <app-admin-product-detail [product]="selectedProduct" (close)="closeDetail()" (edit)="openEdit($event)"
     (statusChanged)="onProductStatusChanged($event)" />
@@ -439,9 +622,9 @@ selectedProduct
 
 
 
-<!-- ================================================= -->
+<!-- ============================================================= -->
 <!-- CREATE POPUP -->
-<!-- ================================================= -->
+<!-- ============================================================= -->
 
 @if (showCreateModal) {
 
@@ -450,96 +633,69 @@ selectedProduct
 }
 
 
-
-<!-- ================================================= -->
-<!-- EDIT POPUP -->
-<!-- ================================================= -->
-
-@if (
-showEditModal &&
-selectedProduct
-) {
+@if (showEditModal && selectedProduct) {
 
 <app-admin-product-edit [product]="selectedProduct" (close)="closeEdit()" (updated)="onProductUpdated($event)" />
 
 }
 
-
-
-<!-- ================================================= -->
-<!-- DELETE POPUP -->
-<!-- ================================================= -->
-
-@if (
-showDeleteModal &&
-selectedProduct
-) {
+@if (showDeleteModal &&selectedProduct) {
 
 <div class="modal-backdrop-custom" (click)="closeDelete()"></div>
-
-
 <div class="delete-modal-wrapper">
-
     <div class="delete-modal" (click)="$event.stopPropagation()">
-
         <div class="delete-icon">
-
-            <span class="material-symbols-outlined">
+            <mat-icon>
                 delete
+            </mat-icon>
+        </div>
+
+        <div class="delete-content">
+            <span class="delete-eyebrow">
+                DELETE PRODUCT
             </span>
+            <h3>
+                Delete this product?
+            </h3>
+
+            <p>
+
+                You are about to permanently delete
+
+                <strong>
+                    {{ selectedProduct.name }}
+                </strong>.
+
+                This action cannot be undone.
+
+            </p>
 
         </div>
 
 
-        <h3>
-            Delete Product?
-        </h3>
-
-
-        <p>
-
-            Are you sure you want to delete
-
-            <strong>
-                "{{ selectedProduct.name }}"
-            </strong>
-
-            ?
-
-            <br>
-
-            This action cannot be undone.
-
-        </p>
-
+        <!-- ACTIONS -->
 
         <div class="delete-actions">
 
-            <button type="button" class="btn btn-outline-secondary" (click)="closeDelete()">
-
+            <button type="button" class="cancel-btn" (click)="closeDelete()" [disabled]="deleting">
                 Cancel
-
             </button>
 
 
-            <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="deleting">
+            <button type="button" class="confirm-delete-btn" (click)="confirmDelete()" [disabled]="deleting">
 
                 @if (deleting) {
+
+                <span class="small-spinner"></span>
 
                 Deleting...
 
                 }
 
                 @else {
-
-                <span class="material-symbols-outlined">
-                    delete
-                </span>
-
+                <mat-icon> delete </mat-icon>
                 Delete Product
-
                 }
-
             </button>
 
         </div>
