@@ -6,19 +6,19 @@
         <div class="row align-items-center">
 
             <div class="col-lg-6">
-                <span class="hero-badge" data-aos="fade-up" data-aos-delay="0">Rooted in Siddha tradition</span>
+                <span class="hero-badge">Rooted in Siddha tradition</span>
 
-                <h1 data-aos="fade-up" data-aos-delay="100">
+                <h1>
                     The roots your<br>grandmother trusted.
                 </h1>
 
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p>
                     Stone-ground powders, sun-dried leaves and cold-pressed oils — made
                     the way Tamil households have made them for generations, with
                     nothing added to speed it up.
                 </p>
 
-                <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
+                <div class="hero-cta">
                     <button class="btn btn-mg-primary">
                         Shop the collection
                         <mat-icon class="ms-2">arrow_forward</mat-icon>
@@ -28,7 +28,7 @@
                     </a>
                 </div>
 
-                <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                <div class="hero-stats">
                     <div><strong>100%</strong><span>Chemical-free</span></div>
                     <div><strong>SUN</strong><span>Dried in the open air</span></div>
                     <div><strong>1948</strong><span>Family recipe since</span></div>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-lg-6">
-                <div class="hero-art" data-aos="fade-left" data-aos-delay="150">
+                <div class="hero-art">
                     <svg viewBox="0 0 420 460" class="root-svg" aria-hidden="true">
                         <path class="root-path root-path--main"
                             d="M210 40 C 190 120, 230 160, 210 230 C 195 290, 150 300, 120 360 C 100 400, 95 425, 80 445" />
@@ -70,7 +70,7 @@
 <section class="categories-section" id="categories">
     <div class="container">
 
-        <div class="section-header" data-aos="fade-up">
+        <div class="section-header">
             <div>
                 <span class="section-label">Explore</span>
                 <h2>Shop by concern</h2>
@@ -80,37 +80,37 @@
 
         <div class="row g-3">
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="category-card">
                     <mat-icon>spa</mat-icon>
                     <span>Hair Care</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="60">
+                <div class="category-card">
                     <mat-icon>auto_awesome</mat-icon>
                     <span>Face Care</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="120">
+                <div class="category-card">
                     <mat-icon>water_drop</mat-icon>
                     <span>Skin Care</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="180">
+                <div class="category-card">
                     <mat-icon>inventory_2</mat-icon>
                     <span>Powders</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="240">
+                <div class="category-card">
                     <mat-icon>favorite</mat-icon>
                     <span>Wellness</span>
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="category-card">
                     <mat-icon>card_giftcard</mat-icon>
                     <span>Combos</span>
                 </div>
@@ -124,7 +124,7 @@
 <section class="story-section" id="story">
     <div class="container">
         <div class="row align-items-center g-5">
-            <div class="col-lg-5" data-aos="fade-right">
+            <div class="col-lg-5">
                 <span class="section-label">Our process</span>
                 <h2>No shortcuts, <br>same as always.</h2>
                 <p>
@@ -136,21 +136,21 @@
             <div class="col-lg-7">
                 <div class="row g-4">
                     <div class="col-sm-4">
-                        <div class="principle" data-aos="fade-up" data-aos-delay="0">
+                        <div class="principle">
                             <span class="principle__mark">Sun</span>
                             <h3>Dried outdoors</h3>
                             <p>No machine dryers — just heat, air and patience.</p>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="principle" data-aos="fade-up" data-aos-delay="100">
+                        <div class="principle">
                             <span class="principle__mark">Stone</span>
                             <h3>Cold-ground</h3>
                             <p>Low-heat grinding keeps the natural oils intact.</p>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="principle" data-aos="fade-up" data-aos-delay="200">
+                        <div class="principle">
                             <span class="principle__mark">Plain</span>
                             <h3>Nothing added</h3>
                             <p>No fillers, silicones or synthetic fragrance.</p>
@@ -166,7 +166,7 @@
 <section class="products-section" id="products">
     <div class="container">
 
-        <div class="section-header" data-aos="fade-up">
+        <div class="section-header">
             <div>
                 <span class="section-label">Our products</span>
                 <h2>Popular products</h2>
@@ -185,7 +185,7 @@
         @if (!loading && products.length > 0) {
         <div class="row g-4">
             @for (product of products; track product._id; let i = $index) {
-            <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" [attr.data-aos-delay]="(i % 4) * 80">
+            <div class="col-6 col-md-4 col-lg-3">
                 <app-product-card [product]="product" (addToCart)="addToCart($event)"
                     (toggleWishlist)="toggleWishlist($event)" />
             </div>
@@ -205,7 +205,7 @@
 <!-- ============ NEWSLETTER ============ -->
 <section class="newsletter-section">
     <div class="container">
-        <div class="newsletter-card" data-aos="fade-up">
+        <div class="newsletter-card">
             <div>
                 <h2>Get the first batch news.</h2>
                 <p>One email a month — new stock, small-batch drops, nothing else.</p>

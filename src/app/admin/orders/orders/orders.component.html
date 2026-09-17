@@ -1,0 +1,351 @@
+<div class="orders-page">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="orders-header">
+
+        <div>
+
+            <span class="eyebrow">
+                MY ACCOUNT
+            </span>
+
+            <h1>
+                My Orders
+            </h1>
+
+            <p>
+                View your recent orders and track
+                your purchases.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- LOADING -->
+    <!-- ================================================= -->
+
+    @if (loading) {
+
+        <div class="loading-state">
+
+            <div
+                class="spinner-border"
+                role="status">
+            </div>
+
+            <p>
+                Loading your orders...
+            </p>
+
+        </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- ERROR -->
+    <!-- ================================================= -->
+
+    @if (!loading && errorMessage) {
+
+        <div class="error-state">
+
+            <div class="error-icon">
+                !
+            </div>
+
+            <h3>
+                Something went wrong
+            </h3>
+
+            <p>
+                {{ errorMessage }}
+            </p>
+
+            <button
+                type="button"
+                class="retry-btn"
+                (click)="loadOrders()">
+
+                Try Again
+
+            </button>
+
+        </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- EMPTY -->
+    <!-- ================================================= -->
+
+    @if (!loading &&
+         !errorMessage &&
+         orders.length === 0) {
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                <i class="bi bi-box-seam"></i>
+            </div>
+
+            <h2>
+                No Orders Yet
+            </h2>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <a
+                routerLink="/products"
+                class="shop-btn">
+
+                Start Shopping
+
+            </a>
+
+        </div>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- ORDERS -->
+    <!-- ================================================= -->
+
+    @if (!loading &&
+         !errorMessage &&
+         orders.length > 0) {
+
+        <div class="orders-list">
+
+
+            @for (
+                order of orders;
+                track order._id
+            ) {
+
+                <article
+                    class="order-card">
+
+
+                    <!-- ================================= -->
+                    <!-- TOP -->
+                    <!-- ================================= -->
+
+                    <div class="order-top">
+
+                        <div>
+
+                            <span class="order-label">
+                                ORDER ID
+                            </span>
+
+                            <h3>
+                                #{{ order._id }}
+                            </h3>
+
+                        </div>
+
+
+                        <div class="order-date">
+
+                            {{ formatDate(order.createdAt) }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================= -->
+                    <!-- PRODUCT PREVIEW -->
+                    <!-- ================================= -->
+
+                    <div class="product-preview">
+
+                        @for (
+                            item of order.items;
+                            track item.name
+                        ) {
+
+                            <div class="product-row">
+
+
+                                <div class="product-image">
+
+                                    @if (
+                                        item.product.images.length
+                                    ) {
+
+                                        <img
+                                            [src]="item.product.images[0]"
+                                            [alt]="item.name">
+
+                                    } @else {
+
+                                        <div class="image-placeholder">
+
+                                            <i class="bi bi-image"></i>
+
+                                        </div>
+
+                                    }
+
+                                </div>
+
+
+                                <div class="product-info">
+
+                                    <h4>
+                                        {{ item.name }}
+                                    </h4>
+
+                                    <p>
+                                        Qty:
+                                        {{ item.quantity }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="product-price">
+
+                                    ₹{{ item.subtotal }}
+
+                                </div>
+
+                            </div>
+
+                        }
+
+                    </div>
+
+
+                    <!-- ================================= -->
+                    <!-- SUMMARY -->
+                    <!-- ================================= -->
+
+                    <div class="order-summary">
+
+
+                        <div class="summary-item">
+
+                            <span>
+                                Items
+                            </span>
+
+                            <strong>
+                                {{ getTotalItems(order) }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <span>
+                                Payment
+                            </span>
+
+                            <strong
+                                class="payment-badge"
+                                [class]="
+                                    getPaymentStatusClass(
+                                        order.payment.status
+                                    )
+                                ">
+
+                                {{ order.payment.status }}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <span>
+                                Order Status
+                            </span>
+
+                            <strong
+                                class="status-badge"
+                                [class]="
+                                    getStatusClass(
+                                        order.orderStatus
+                                    )
+                                ">
+
+                                {{ order.orderStatus }}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ₹{{ order.totalAmount }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================= -->
+                    <!-- FOOTER -->
+                    <!-- ================================= -->
+
+                    <div class="order-footer">
+
+                        <span class="item-count">
+
+                            {{ getTotalItems(order) }}
+                            {{ getTotalItems(order) === 1
+                                ? 'item'
+                                : 'items'
+                            }}
+
+                        </span>
+
+
+                        <a
+                            [routerLink]="[
+                                '/orders',
+                                order._id
+                            ]"
+                            class="view-order-btn">
+
+                            View Order
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
+                </article>
+
+            }
+
+        </div>
+
+    }
+
+</div>

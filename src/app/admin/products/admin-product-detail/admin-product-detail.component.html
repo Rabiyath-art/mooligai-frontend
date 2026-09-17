@@ -59,9 +59,7 @@
 
             <div class="product-detail-image">
 
-                @if (
-                product.images?.length
-                ) {
+                @if ( product.images.length ) {
 
                 <img [src]="product.images[0]" [alt]="product.name">
 

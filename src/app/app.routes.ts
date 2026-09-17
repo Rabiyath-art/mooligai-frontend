@@ -87,6 +87,19 @@ export const routes: Routes = [
             )
     },
 
+    {
+        path: 'orders',
+
+        canActivate: [authGuard],
+
+        loadComponent: () =>
+            import(
+                './features/user-order/user-order.component'
+            ).then(
+                m => m.OrdersComponent
+            )
+    },
+
 
     // =====================================================
     // ADMIN
@@ -170,6 +183,16 @@ export const routes: Routes = [
                     )
             },
 
+            {
+                path: 'categories/:id',
+
+                loadComponent: () =>
+                    import(
+                        './admin/categories/admin-category-detail/admin-category-detail.component'
+                    ).then(
+                        m => m.AdminCategoryDetailComponent
+                    )
+            },
 
             // ===============================================
             // ORDERS
@@ -177,12 +200,23 @@ export const routes: Routes = [
 
             {
                 path: 'orders',
-
+                canActivate: [authGuard],
                 loadComponent: () =>
                     import(
-                        './admin/orders/admin-orders/admin-orders.component'
+                        './admin/orders/orders/orders.component'
                     ).then(
-                        m => m.AdminOrdersComponent
+                        m => m.OrdersComponent
+                    )
+            },
+
+            {
+                path: 'orders/:id',
+                canActivate: [authGuard],
+                loadComponent: () =>
+                    import(
+                        './admin/orders/order-details/order-details.component'
+                    ).then(
+                        m => m.OrderDetailsComponent
                     )
             },
 

@@ -293,7 +293,7 @@
 
                             <div class="product-info">
 
-                                @if (product.images?.length) {
+                                @if (product.images.length) {
 
                                 <img [src]="product.images[0]" [alt]="product.name" class="product-image">
 
@@ -333,7 +333,7 @@
 
                         <td>
 
-                            @if (product.category?.name) {
+                            @if (product.category.name) {
 
                             <span class="category-name">
                                 {{ product.category.name }}

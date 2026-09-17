@@ -328,7 +328,6 @@ export class CheckoutComponent implements OnInit {
 
                         this.errorMessage =
                             'Unable to load payment gateway.';
-
                         return;
 
                     }
@@ -437,7 +436,8 @@ export class CheckoutComponent implements OnInit {
                 next: (result) => {
                     this.loading = false;
                     console.log('Payment verified:', result);
-                    this.router.navigate(['/order-success', orderId]);
+                    // this.router.navigate(['/order-success', orderId]);
+                    this.router.navigate(['/orders']);
                 },
 
                 error: (error) => {
