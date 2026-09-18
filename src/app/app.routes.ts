@@ -100,6 +100,18 @@ export const routes: Routes = [
             )
     },
 
+    {
+        path: 'orders/:id',
+
+        canActivate: [authGuard],
+
+        loadComponent: () =>
+            import(
+                './features/order-details/order-details.component'
+            ).then(
+                m => m.OrderDetailsComponent
+            )
+    },
 
     // =====================================================
     // ADMIN

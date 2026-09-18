@@ -28,6 +28,7 @@ import { Address } from './address.model';
 import { Product } from './product.model';
 
 export interface OrderItem {
+    _id: string;
     product: Product;
     name: string;
     quantity: number;
